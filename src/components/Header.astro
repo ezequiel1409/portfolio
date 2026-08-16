@@ -1,0 +1,174 @@
+---
+import ThemeToggle from './ThemeToggle';
+import { SOCIAL } from '../data/portfolio.data';
+
+const navLinks = [
+  { label: 'Experiencia', href: '#experience' },
+  { label: 'Proyectos',   href: '#projects' },
+  { label: 'Stack',       href: '#stack' },
+  { label: 'Arquitectura',href: '#architecture' },
+  { label: 'Contacto',   href: '#contact' },
+];
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-rim bg-canvas/90 backdrop-blur-md"
+  role="banner"
+>
+  <div class="wrap">
+    <div class="flex items-center justify-between h-14 gap-6">
+
+      <!-- Brand -->
+      <a
+        href="/portfolio"
+        class="flex items-center gap-2.5 shrink-0 group"
+        aria-label="Inicio — Ezequiel Gonzalez"
+      >
+        <span
+          class="w-8 h-8 flex items-center justify-center bg-gold text-canvas font-display font-medium text-xs rounded-sm"
+          aria-hidden="true"
+        >
+          EG
+        </span>
+        <span class="font-display text-sm text-ink group-hover:text-gold transition-colors hidden sm:inline">
+          ezequiel<span class="text-gold">.</span>dev
+        </span>
+      </a>
+
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Navegación principal">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="font-mono text-xs text-ink-2 hover:text-gold transition-colors tracking-wide"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3 ml-auto md:ml-0">
+        <!-- Social links — desktop -->
+        <div class="hidden lg:flex items-center gap-4">
+          <a
+            href={SOCIAL.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors flex items-center gap-1"
+            aria-label="GitHub de Ezequiel Gonzalez"
+          >
+            GitHub
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+          <a
+            href={SOCIAL.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors flex items-center gap-1"
+            aria-label="LinkedIn de Ezequiel Gonzalez"
+          >
+            LinkedIn
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="w-px h-4 bg-rim hidden lg:block" aria-hidden="true"></div>
+
+        <!-- Theme toggle (React island — solo JS necesario) -->
+        <ThemeToggle client:load />
+
+        <!-- Mobile hamburger -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="md:hidden flex flex-col justify-center gap-1.5 w-8 h-8 p-1"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="block w-full h-px bg-ink-2 transition-transform origin-center" id="ham-top"></span>
+          <span class="block w-full h-px bg-ink-2 transition-opacity" id="ham-mid"></span>
+          <span class="block w-full h-px bg-ink-2 transition-transform origin-center" id="ham-bot"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-rim bg-surface"
+    role="navigation"
+    aria-label="Menú móvil"
+  >
+    <nav class="wrap py-4 flex flex-col gap-1">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="font-mono text-xs text-ink-2 hover:text-gold py-2.5 border-b border-rim/50 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="flex gap-6 pt-4">
+        <a href={SOCIAL.github} target="_blank" rel="noopener" class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
+          GitHub ↗
+        </a>
+        <a href={SOCIAL.linkedin} target="_blank" rel="noopener" class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
+          LinkedIn ↗
+        </a>
+        <a href={`mailto:${SOCIAL.email}`} class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
+          Email
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const hamTop = document.getElementById('ham-top')!;
+  const hamMid = document.getElementById('ham-mid')!;
+  const hamBot = document.getElementById('ham-bot')!;
+
+  let open = false;
+
+  btn.addEventListener('click', () => {
+    open = !open;
+    menu.classList.toggle('hidden', !open);
+    btn.setAttribute('aria-expanded', String(open));
+
+    // Animación hamburger → X
+    if (open) {
+      hamTop.style.transform = 'rotate(45deg) translateY(6px)';
+      hamMid.style.opacity = '0';
+      hamBot.style.transform = 'rotate(-45deg) translateY(-6px)';
+    } else {
+      hamTop.style.transform = '';
+      hamMid.style.opacity = '';
+      hamBot.style.transform = '';
+    }
+  });
+
+  // Cerrar al hacer click en un link del menú móvil
+  menu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      open = false;
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      hamTop.style.transform = '';
+      hamMid.style.opacity = '';
+      hamBot.style.transform = '';
+    });
+  });
+</script>
