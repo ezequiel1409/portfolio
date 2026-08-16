@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout
+  title="404 — Página no encontrada · Ezequiel Gonzalez"
+  description="Esta página no existe."
+>
+  <Header />
+
+  <main class="min-h-[80vh] flex items-center justify-center px-6">
+    <div class="text-center">
+      <p class="font-display text-8xl text-rim-active font-medium mb-4" aria-hidden="true">
+        404
+      </p>
+      <p class="font-mono text-sm text-ink-3 mb-2">
+        <span class="text-gold">$</span> GET /this-page → 404 Not Found
+      </p>
+      <h1 class="font-display text-2xl text-ink mb-6 tracking-tight">
+        Esta página no existe
+      </h1>
+      <a href="/portfolio" class="btn-primary">
+        ← Volver al inicio
+      </a>
+    </div>
+  </main>
+</Layout>
