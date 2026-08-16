@@ -1,0 +1,92 @@
+---
+import { PROJECTS } from '../data/portfolio.data';
+
+const statusLabel: Record<string, string> = {
+  live: 'Live',
+  'in-progress': 'En progreso',
+  planned: 'Planificado',
+};
+---
+
+<section id="projects" class="section-rule" aria-labelledby="projects-heading">
+  <div class="wrap">
+
+    <header class="mb-12">
+      <p class="eyebrow mb-4">Proyectos</p>
+      <h2 id="projects-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
+        Ingeniería visible
+      </h2>
+      <p class="text-ink-2 text-sm mt-3 max-w-xl">
+        Cada proyecto responde una pregunta: ¿qué habilidad de ingeniería
+        demuestra esto que los demás no demuestran ya?
+      </p>
+    </header>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      {PROJECTS.map((project) => (
+        <article
+          class="group border border-rim rounded-lg p-6 bg-surface hover:border-rim-active transition-colors duration-200 flex flex-col"
+          aria-label={project.title}
+        >
+          <!-- Header -->
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <div>
+              <h3 class="font-display text-base text-ink font-medium leading-snug">
+                {project.title}
+              </h3>
+              <p class="font-mono text-2xs text-ink-3 mt-0.5">{project.kind}</p>
+            </div>
+
+            <!-- Status badge -->
+            <span
+              class:list={[
+                'shrink-0 font-mono text-2xs px-2 py-0.5 rounded-sm border',
+                project.status === 'live'
+                  ? 'bg-live-dim text-live border-live/20'
+                  : project.status === 'in-progress'
+                    ? 'bg-warn-dim text-warn border-warn/20'
+                    : 'bg-surface-2 text-ink-3 border-rim',
+              ]}
+            >
+              {project.status === 'live' && (
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-live mr-1" aria-hidden="true"></span>
+              )}
+              {statusLabel[project.status]}
+            </span>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-sm text-ink-2 leading-relaxed mb-4 flex-1">
+            {project.description}
+          </p>
+
+          <!-- Stack -->
+          <div class="flex flex-wrap gap-2 mb-4" role="list" aria-label="Stack">
+            {project.stack.map((tech) => (
+              <span class="badge" role="listitem">{tech}</span>
+            ))}
+          </div>
+
+          <!-- Link -->
+          {project.href && (
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 font-mono text-xs text-gold hover:text-gold-dim transition-colors mt-auto"
+              aria-label={`Ver ${project.title} en GitHub`}
+            >
+              Ver repositorio
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
