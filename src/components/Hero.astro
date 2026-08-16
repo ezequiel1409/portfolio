@@ -1,0 +1,133 @@
+---
+import { SOCIAL } from '../data/portfolio.data';
+---
+
+<section
+  class="min-h-[92vh] flex flex-col justify-center px-6 py-24 relative overflow-hidden"
+  aria-labelledby="hero-heading"
+>
+  <!-- Grid de fondo — sutil, no decorativo -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.025]"
+    aria-hidden="true"
+    style="background-image: linear-gradient(to right, #c9a227 1px, transparent 1px), linear-gradient(to bottom, #c9a227 1px, transparent 1px); background-size: 64px 64px;"
+  ></div>
+
+  <div class="wrap relative z-10">
+
+    <!-- Status line -->
+    <div class="status-live mb-8 animate-fade-up" style="animation-delay: 0ms; animation-fill-mode: both;">
+      IBM · Banco Supervielle · COMEX
+    </div>
+
+    <!-- Terminal prompt — firma visual del portfolio.
+         CSS puro: sin JavaScript, sin dependencias, respeta reduced-motion. -->
+    <div
+      class="font-display text-ink-3 text-sm mb-6 flex items-center gap-2 animate-fade-up"
+      style="animation-delay: 100ms; animation-fill-mode: both;"
+      aria-hidden="true"
+    >
+      <span class="text-gold select-none">$</span>
+      <span class="overflow-hidden whitespace-nowrap hero-typing">
+        whoami
+      </span>
+      <span class="w-px h-4 bg-gold animate-blink inline-block"></span>
+    </div>
+
+    <!-- Headline -->
+    <h1
+      id="hero-heading"
+      class="font-display text-5xl sm:text-6xl md:text-7xl font-medium text-ink tracking-tightest leading-none mb-6 animate-fade-up"
+      style="animation-delay: 200ms; animation-fill-mode: both;"
+    >
+      Full Stack<br />
+      <span class="text-gold">Developer.</span>
+    </h1>
+
+    <!-- Subtítulo -->
+    <p
+      class="max-w-xl text-lg text-ink-2 leading-relaxed mb-10 animate-fade-up"
+      style="animation-delay: 300ms; animation-fill-mode: both;"
+    >
+      Construyo sistemas que se mantienen en pie cuando importa.
+      Microservicios event-driven, observabilidad end-to-end, y arquitectura
+      que escala sin degradación. 4+ años en sistemas financieros de alta disponibilidad.
+    </p>
+
+    <!-- CTAs -->
+    <div
+      class="flex flex-wrap gap-4 animate-fade-up"
+      style="animation-delay: 400ms; animation-fill-mode: both;"
+    >
+      <a href="#experience" class="btn-primary">
+        Ver experiencia
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <polyline points="19 12 12 19 5 12"/>
+        </svg>
+      </a>
+      <a
+        href={SOCIAL.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost"
+        aria-label="Ver proyectos en GitHub"
+      >
+        GitHub
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+      <a
+        href={SOCIAL.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost"
+        aria-label="Ver perfil de LinkedIn"
+      >
+        LinkedIn
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Métricas rápidas -->
+    <div
+      class="flex flex-wrap gap-8 mt-16 pt-8 border-t border-rim animate-fade-up"
+      style="animation-delay: 500ms; animation-fill-mode: both;"
+    >
+      {[
+        { value: '4+', label: 'años experiencia' },
+        { value: '3', label: 'industrias (banking, gov, enterprise)' },
+        { value: 'Event-Driven', label: 'arquitectura en producción' },
+        { value: 'AWS', label: 'cloud primario' },
+      ].map(({ value, label }) => (
+        <div>
+          <p class="font-display text-xl text-gold font-medium leading-none">{value}</p>
+          <p class="font-mono text-2xs text-ink-3 mt-1">{label}</p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Animación de escritura — CSS puro, sin JS */
+  .hero-typing {
+    animation: type-in 1.2s steps(7, end) 0.3s both;
+    max-width: 7ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-typing {
+      animation: none;
+      max-width: none;
+    }
+  }
+</style>
