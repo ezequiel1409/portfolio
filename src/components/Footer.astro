@@ -1,0 +1,121 @@
+---
+import { SOCIAL, CREDENTIALS } from '../data/portfolio.data';
+
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="border-t border-rim mt-0" role="contentinfo">
+
+  <!-- Contact CTA -->
+  <div class="wrap py-20">
+    <div class="max-w-xl">
+      <p class="eyebrow mb-4">Contacto</p>
+      <h2 class="font-display text-3xl md:text-4xl text-ink tracking-tighter mb-4">
+        ¿Construimos algo serio?
+      </h2>
+      <p class="text-ink-2 text-sm leading-relaxed mb-8">
+        Estoy disponible para roles remotos, proyectos puntuales y conversaciones
+        técnicas. Si lo que buscás es alguien que piense en términos de sistemas
+        antes que de features, tiene sentido que hablemos.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a
+          href={`mailto:${SOCIAL.email}`}
+          class="btn-primary"
+          aria-label="Enviar email a Ezequiel Gonzalez"
+        >
+          Escribirme
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+        <a
+          href={SOCIAL.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-ghost"
+          aria-label="Ver perfil de LinkedIn"
+        >
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Educación y credenciales -->
+  <div class="border-t border-rim">
+    <div class="wrap py-10">
+      <p class="font-mono text-2xs uppercase tracking-widest text-ink-3 mb-5">
+        Educación & Credenciales
+      </p>
+      <div class="flex flex-col gap-3">
+        {CREDENTIALS.map((c) => (
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <div class="flex items-baseline gap-2">
+              <span class="text-sm text-ink">{c.label}</span>
+              <span class="font-mono text-2xs text-ink-3">{c.org}</span>
+            </div>
+            {c.period && (
+              <span class="font-mono text-2xs text-ink-3 shrink-0">{c.period}</span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="border-t border-rim">
+    <div class="wrap py-5 flex flex-wrap items-center justify-between gap-4">
+
+      <!-- Brand pequeño -->
+      <div class="flex items-center gap-2">
+        <span
+          class="w-6 h-6 flex items-center justify-center bg-gold text-canvas font-display text-2xs rounded-sm"
+          aria-hidden="true"
+        >
+          EG
+        </span>
+        <span class="font-mono text-2xs text-ink-3">
+          © {year} Ezequiel Gonzalez
+        </span>
+      </div>
+
+      <!-- Links -->
+      <nav class="flex items-center gap-5" aria-label="Links de pie de página">
+        <a
+          href={SOCIAL.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors"
+          aria-label="GitHub"
+        >
+          GitHub
+        </a>
+        <a
+          href={SOCIAL.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors"
+          aria-label="LinkedIn"
+        >
+          LinkedIn
+        </a>
+        <a
+          href={`mailto:${SOCIAL.email}`}
+          class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors"
+        >
+          Email
+        </a>
+      </nav>
+
+      <!-- Build info -->
+      <span class="font-mono text-2xs text-ink-3 hidden sm:inline">
+        Built with Astro · Static · GitHub Pages
+      </span>
+
+    </div>
+  </div>
+
+</footer>
