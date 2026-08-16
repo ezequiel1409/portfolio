@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Ezequiel Gonzalez — Full Stack Developer, Backend & Cloud',
+  description = 'Construyo sistemas que se mantienen en pie cuando importa. 4+ años en microservicios event-driven, observabilidad end-to-end y arquitectura que escala en producción.',
+  ogImage = '/portfolio/og.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="es-AR" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="es_AR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
+    <link rel="apple-touch-icon" href="/portfolio/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0a0c0f" />
+
+    <!-- Preconnect a Google Fonts antes de cargarlas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!--
+      ANTI-FLASH: este script inline corre ANTES de cualquier render.
+      Lee localStorage y aplica data-theme directamente al <html>
+      para que nunca haya un destello de modo incorrecto.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('eg-theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', stored);
+            return;
+          }
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          document.documentElement.setAttribute('data-theme', prefersLight ? 'light' : 'dark');
+        } catch (_) {
+          // localStorage bloqueado (modo privado extremo), dark por defecto
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-canvas text-ink antialiased">
+    <slot />
+  </body>
+</html>
