@@ -175,11 +175,11 @@ const DATA_ES = {
   projects: [
     {
       title: 'career-os',
-      kind: 'Engineering Brand System',
+      kind: 'Engineering Brand System / AI',
       status: 'live',
       description:
-        'Repositorio maestro de contexto que alimenta cualquier IA usada en el flujo de trabajo: CV, arquitectura, criterio de diseño y forma de trabajar en un solo lugar. Este portfolio se construyó a partir de él.',
-      stack: ['Markdown', 'Prompt Engineering', 'Claude', 'GitHub Actions'],
+        'Repositorio maestro de contexto que alimenta agentes de IA en el flujo de desarrollo: Google Antigravity, Claude Code, ChatGPT Codex e IBM watsonx. Arquitectura, decisiones y criterio técnico unificados.',
+      stack: ['Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'GitHub Actions'],
       href: 'https://github.com/ezequiel1409/portfolio',
     },
     {
@@ -210,10 +210,11 @@ const DATA_ES = {
 
   tech: [
     { label: 'Backend', items: ['.NET Core / .NET6', 'C#', 'Node.js', 'TypeScript', 'ASP.NET Core', 'REST APIs'] },
-    { label: 'Frontend', items: ['Angular', 'React', 'React Native', 'Blazor', 'JavaScript ES6+'] },
     { label: 'Cloud & DevOps', items: ['AWS (ECS, Lambda, DynamoDB, SQS, SNS)', 'Kafka', 'Rancher', 'Consul', 'Docker'] },
+    { label: 'IA & Flujos Agénticos', items: ['Google Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'Prompt Engineering', 'AI-Assisted Dev'] },
     { label: 'Bases de datos', items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'Redis', 'ElasticSearch'] },
     { label: 'Observabilidad', items: ['Dynatrace', 'Kibana', 'Grafana'] },
+    { label: 'Frontend', items: ['Angular', 'React', 'React Native', 'Blazor', 'JavaScript ES6+'] },
     { label: 'Arquitectura', items: ['CQRS', 'Clean Architecture', 'SOLID', 'Event-Driven', 'Microservices'] },
     { label: 'Testing & Calidad', items: ['Jest', 'Karma', 'SonarQube', 'ESLint'] },
   ] as readonly TechCategory[],
@@ -402,11 +403,11 @@ const DATA_EN = {
   projects: [
     {
       title: 'career-os',
-      kind: 'Engineering Brand System',
+      kind: 'Engineering Brand System / AI',
       status: 'live',
       description:
-        'Master contextual engineering repository powering any AI workflow: resume, architecture design decisions, and engineering ethos in one place. This portfolio is built upon it.',
-      stack: ['Markdown', 'Prompt Engineering', 'Claude', 'GitHub Actions'],
+        'Master engineering context repository powering autonomous AI workflows: Google Antigravity, Claude Code, ChatGPT Codex, and IBM watsonx. Architecture decisions and context synchronization.',
+      stack: ['Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'GitHub Actions'],
       href: 'https://github.com/ezequiel1409/portfolio',
     },
     {
@@ -437,10 +438,11 @@ const DATA_EN = {
 
   tech: [
     { label: 'Backend', items: ['.NET Core / .NET6', 'C#', 'Node.js', 'TypeScript', 'ASP.NET Core', 'REST APIs'] },
-    { label: 'Frontend', items: ['Angular', 'React', 'React Native', 'Blazor', 'JavaScript ES6+'] },
     { label: 'Cloud & DevOps', items: ['AWS (ECS, Lambda, DynamoDB, SQS, SNS)', 'Kafka', 'Rancher', 'Consul', 'Docker'] },
+    { label: 'AI & Agentic Workflows', items: ['Google Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'Prompt Engineering', 'AI-Assisted Dev'] },
     { label: 'Databases', items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'Redis', 'ElasticSearch'] },
     { label: 'Observability', items: ['Dynatrace', 'Kibana', 'Grafana'] },
+    { label: 'Frontend', items: ['Angular', 'React', 'React Native', 'Blazor', 'JavaScript ES6+'] },
     { label: 'Architecture', items: ['CQRS', 'Clean Architecture', 'SOLID', 'Event-Driven', 'Microservices'] },
     { label: 'Testing & Quality', items: ['Jest', 'Karma', 'SonarQube', 'ESLint'] },
   ] as readonly TechCategory[],
