@@ -43,7 +43,7 @@ export interface Credential {
 // ── LINKS SOCIALES ────────────────────────────────────────────
 export const SOCIAL = {
   github: 'https://github.com/ezequiel1409',
-  linkedin: 'https://www.linkedin.com/in/ezequielgonzalez14',
+  linkedin: 'https://www.linkedin.com/in/ezequiel-gonzalez14',
   email: 'ezequiel140901@gmail.com',
 } as const;
 
