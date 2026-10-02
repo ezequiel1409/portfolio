@@ -209,6 +209,15 @@ const DATA_ES = {
 
   projects: [
     {
+      title: 'Agentic Dev & MCP Workspace',
+      kind: 'Agentes Autónomos & Model Context Protocol (MCP)',
+      status: 'live',
+      description:
+        'Suite de agentes autónomos y servidores MCP personalizados para automatizar el flujo diario de ingeniería: diagnóstico inteligente de errores en logs, generación asistida de tests unitarios, refactors guiados y consultas seguras a bases de datos y APIs locales en tiempo real.',
+      stack: ['MCP (Model Context Protocol)', 'Google Antigravity', 'Claude Code', 'Node.js', 'TypeScript', 'Docker'],
+      href: 'https://github.com/ezequiel1409',
+    },
+    {
       title: 'career-os',
       kind: 'Engineering Brand System / AI',
       status: 'live',
@@ -246,7 +255,7 @@ const DATA_ES = {
   tech: [
     { label: 'Backend & APIs', items: ['.NET Core / .NET6', 'C#', 'Node.js', 'TypeScript', 'ASP.NET Core', 'REST APIs'] },
     { label: 'Cloud & DevOps', items: ['AWS (ECS, Lambda, DynamoDB, SQS, SNS)', 'Kafka', 'Docker', 'Rancher', 'CI/CD'] },
-    { label: 'IA & Flujos Agénticos', items: ['Google Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'Prompt Engineering', 'AI-Assisted Dev'] },
+    { label: 'IA Agéntica & MCP', items: ['MCP (Model Context Protocol)', 'Google Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'Prompt Engineering', 'AI-Assisted Dev'] },
     { label: 'Bases de datos', items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'Redis', 'ElasticSearch'] },
     { label: 'Observabilidad', items: ['Dynatrace', 'Grafana', 'Kibana'] },
     { label: 'Frontend', items: ['Angular', 'React', 'TypeScript', 'Blazor', 'Tailwind CSS'] },
@@ -532,6 +541,15 @@ const DATA_EN = {
 
   projects: [
     {
+      title: 'Agentic Dev & MCP Workspace',
+      kind: 'Autonomous Agents & Model Context Protocol (MCP)',
+      status: 'live',
+      description:
+        'Suite of autonomous AI agents and custom MCP (Model Context Protocol) servers built to accelerate daily engineering tasks: automated production log diagnosis, unit test generation, guided refactorings, and secure local database and API querying in real time.',
+      stack: ['MCP (Model Context Protocol)', 'Google Antigravity', 'Claude Code', 'Node.js', 'TypeScript', 'Docker'],
+      href: 'https://github.com/ezequiel1409',
+    },
+    {
       title: 'career-os',
       kind: 'Engineering Brand System / AI',
       status: 'live',
@@ -569,7 +587,7 @@ const DATA_EN = {
   tech: [
     { label: 'Backend & APIs', items: ['.NET Core / .NET6', 'C#', 'Node.js', 'TypeScript', 'ASP.NET Core', 'REST APIs'] },
     { label: 'Cloud & DevOps', items: ['AWS (ECS, Lambda, DynamoDB, SQS, SNS)', 'Kafka', 'Docker', 'Rancher', 'CI/CD'] },
-    { label: 'AI & Agentic Workflows', items: ['Google Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'Prompt Engineering', 'AI-Assisted Dev'] },
+    { label: 'Agentic AI & MCP', items: ['MCP (Model Context Protocol)', 'Google Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'Prompt Engineering', 'AI-Assisted Dev'] },
     { label: 'Databases', items: ['SQL Server', 'PostgreSQL', 'MongoDB', 'Redis', 'ElasticSearch'] },
     { label: 'Observability', items: ['Dynatrace', 'Grafana', 'Kibana'] },
     { label: 'Frontend', items: ['Angular', 'React', 'TypeScript', 'Blazor', 'Tailwind CSS'] },

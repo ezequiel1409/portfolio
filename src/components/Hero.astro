@@ -219,16 +219,18 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     if (!form || !input || !output) return;
 
     const commands: Record<string, string> = {
-      help: 'Comandos: whoami, servicios, carta, ai, stack, experience, projects, contact, cv, clear',
+      help: 'Comandos: whoami, mcp, agentes, servicios, carta, ai, stack, experience, projects, contact, cv, clear',
       whoami: 'Ezequiel Gonzalez — Desarrollador Full Stack & Cloud enfocado en Backend (.NET, Node.js, AWS). Soluciones prácticas y código limpio.',
+      mcp: 'Model Context Protocol (MCP): Conexión de agentes autónomos (Antigravity, Claude Code) con bases de datos, APIs y herramientas locales para resolver diagnósticos, refactors y tests en el día a día.',
+      agentes: 'Agentes Autónomos: Flujos agénticos para automatizar tareas repetitivas de ingeniería, resolver incidencias técnicas y acelerar entregas con alta calidad.',
       carta: 'Carta abierta: No vendo humo ni sistemas mágicos. En software las cosas fallan; mi valor es diseñar con criterio, reintentos seguros, observabilidad y honestidad.',
       letter: 'Open Letter: No jargon or magic promises. Things fail in real software; my value is engineering judgment, resilience, observability, and honest communication.',
       servicios: 'Soluciones: 1) Rendimiento y escala backend, 2) Nuevas APIs/productos, 3) Modernización legacy, 4) Integraciones bancarias/pagos, 5) Desarrollo asistido con IA.',
       services: 'Solutions: 1) Backend scale & performance, 2) New APIs & products, 3) Legacy modernization, 4) Banking & payment integrations, 5) AI-assisted velocity.',
-      ai: 'IA y Flujos Agénticos: Google Antigravity, Claude Code, ChatGPT Codex, IBM watsonx. Automatización con criterio técnico.',
-      stack: 'Backend: .NET 6/C#, Node.js, TypeScript | Cloud: AWS | Broker: Kafka, SQS | DB: SQL Server, PostgreSQL | Telemetría: Dynatrace, Grafana',
+      ai: 'IA Agéntica & MCP: Creación y uso diario de agentes autónomos conectados por MCP con Google Antigravity, Claude Code y Codex para acelerar el desarrollo diario.',
+      stack: 'Backend: .NET 6/C#, Node.js, TypeScript | Cloud: AWS | Broker: Kafka, SQS | DB: SQL Server, PostgreSQL | Telemetría: Dynatrace, Grafana | IA: MCP, Antigravity, Claude Code',
       experience: 'IBM (Banco Supervielle COMEX) -> Tecnosoftware (BCRA) -> Ministerio de Trabajo.',
-      projects: 'career-os (Live), Event-Driven Architecture (In-Progress), Observability Stack (Planned), Grupo Mezzo (Live)',
+      projects: 'Agentic Dev & MCP (Live), career-os (Live), Event-Driven Architecture (In-Progress), Grupo Mezzo (Live)',
       contact: 'Email: ezequiel140901@gmail.com | LinkedIn: /in/ezequiel-gonzalez14',
       cv: 'Abriendo / Descargando CV...',
       sudo: 'Permission denied: Nice try! 😉',
