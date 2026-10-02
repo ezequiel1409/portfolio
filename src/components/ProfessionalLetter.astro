@@ -1,0 +1,111 @@
+---
+import { SOCIAL, getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { letter: t } = data.ui;
+---
+
+<section id="letter" class="section-rule" aria-labelledby="letter-heading">
+  <div class="wrap">
+    
+    <div class="relative rounded-lg border border-rim bg-surface p-8 sm:p-12 overflow-hidden shadow-sm">
+      <!-- Glow sutil de acento celeste -->
+      <div
+        class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gold/10 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      ></div>
+
+      <!-- Header de la carta -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-rim">
+        <div>
+          <span class="font-mono text-2xs uppercase tracking-widest text-gold block mb-2">
+            {t.eyebrow}
+          </span>
+          <h2 id="letter-heading" class="font-display text-2xl sm:text-3xl md:text-4xl text-ink tracking-tight font-medium">
+            {t.heading}
+          </h2>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-xs text-ink-3">
+          <span class="w-2 h-2 rounded-full bg-live animate-pulse"></span>
+          <span>{locale === 'en' ? 'Open & Transparent Commitment' : 'Compromiso Abierto y Transparente'}</span>
+        </div>
+      </div>
+
+      <!-- Cuerpo de la carta -->
+      <div class="space-y-4 text-ink-2 text-sm sm:text-base leading-relaxed max-w-3xl">
+        <p class="text-ink font-medium text-base sm:text-lg">
+          {t.p1}
+        </p>
+        <p>
+          {t.p2}
+        </p>
+        <p>
+          {t.p3}
+        </p>
+      </div>
+
+      <!-- Compromisos clave -->
+      <div class="mt-8 pt-8 border-t border-rim">
+        <h3 class="font-display text-base text-ink font-medium mb-6">
+          {t.commitmentsTitle}
+        </h3>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          {t.commitments.map((c) => (
+            <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between">
+              <div>
+                <p class="font-display text-sm text-ink font-medium mb-1.5 flex items-center gap-2">
+                  <span class="text-gold font-mono">0{c.index}.</span>
+                  {c.title}
+                </p>
+                <p class="text-xs text-ink-3 leading-relaxed">
+                  {c.body}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Cierre y Firma -->
+      <div class="mt-10 pt-6 border-t border-rim flex flex-wrap items-center justify-between gap-6">
+        <div>
+          <p class="text-sm text-ink font-display font-medium">
+            {t.signatureName}
+          </p>
+          <p class="text-xs font-mono text-gold mt-0.5">
+            {t.signatureRole}
+          </p>
+          <p class="text-xs text-ink-3 mt-1">
+            {t.closing}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="#contact" class="btn-primary text-xs py-2 px-4">
+            {locale === 'en' ? "Let's talk about your challenge" : 'Charlemos de tu problema'}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a
+            href={SOCIAL.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost text-xs py-2 px-3"
+          >
+            LinkedIn ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,77 @@
+---
+import { getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { services: t } = data.ui;
+---
+
+<section id="services" class="section-rule" aria-labelledby="services-heading">
+  <div class="wrap">
+
+    <header class="mb-12">
+      <p class="eyebrow mb-4">{t.eyebrow}</p>
+      <h2 id="services-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
+        {t.heading}
+      </h2>
+      <p class="text-ink-2 text-sm mt-3 max-w-2xl leading-relaxed">
+        {t.subheading}
+      </p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {t.items.map((item, idx) => (
+        <article
+          class="border border-rim rounded-lg p-6 bg-surface hover:border-gold/60 transition-all duration-200 flex flex-col justify-between group"
+          aria-label={item.problem}
+        >
+          <div>
+            <!-- Tag & Número -->
+            <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-rim">
+              <span class="font-mono text-2xs uppercase tracking-wider text-gold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                {item.tag}
+              </span>
+              <span class="font-mono text-2xs text-ink-3">
+                0{idx + 1}
+              </span>
+            </div>
+
+            <!-- Problema planteado por el cliente -->
+            <h3 class="font-display text-lg text-ink font-medium mb-3 leading-snug group-hover:text-gold transition-colors">
+              "{item.problem}"
+            </h3>
+
+            <!-- Solución técnica y de negocio -->
+            <p class="text-ink-2 text-sm leading-relaxed mb-6">
+              {item.solution}
+            </p>
+          </div>
+
+          <div>
+            <!-- Tecnologías involucradas -->
+            <div class="flex flex-wrap gap-1.5 mb-5" role="list" aria-label="Tecnologías aplicadas">
+              {item.stack.map((stk) => (
+                <span class="badge" role="listitem">{stk}</span>
+              ))}
+            </div>
+
+            <!-- CTA rápido para consultar -->
+            <a
+              href={`#contact`}
+              class="inline-flex items-center gap-1.5 font-mono text-xs text-gold hover:text-gold-dim transition-colors pt-2 border-t border-rim/60 w-full"
+            >
+              <span>{locale === 'en' ? 'Discuss this challenge with me' : 'Consultar por este desafío'}</span>
+              <span class="text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>

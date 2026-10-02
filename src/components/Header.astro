@@ -17,12 +17,13 @@ const isHome = pathname === '' || pathname === baseUrl || pathname === `${baseUr
 const homePrefix = locale === 'en' ? `${baseUrl}/en` : (baseUrl || '');
 
 const navLinks = [
-  { label: t.experience, href: isHome ? '#experience' : `${homePrefix}/#experience` },
-  { label: t.projects,   href: isHome ? '#projects' : `${homePrefix}/#projects` },
-  { label: t.stack,      href: isHome ? '#stack' : `${homePrefix}/#stack` },
+  { label: t.letter,       href: isHome ? '#letter' : `${homePrefix}/#letter` },
+  { label: t.services,     href: isHome ? '#services' : `${homePrefix}/#services` },
+  { label: t.experience,   href: isHome ? '#experience' : `${homePrefix}/#experience` },
+  { label: t.projects,     href: isHome ? '#projects' : `${homePrefix}/#projects` },
   { label: t.architecture, href: isHome ? '#architecture' : `${homePrefix}/#architecture` },
-  { label: t.warStories, href: isHome ? '#war-stories' : `${homePrefix}/#war-stories` },
-  { label: t.contact,   href: isHome ? '#contact' : `${homePrefix}/#contact` },
+  { label: t.warStories,   href: isHome ? '#war-stories' : `${homePrefix}/#war-stories` },
+  { label: t.contact,      href: isHome ? '#contact' : `${homePrefix}/#contact` },
 ];
 ---
 

@@ -123,13 +123,13 @@ const isEn = locale === 'en';
   <!-- Panel de estado del sistema -->
   <div class="mt-4 pt-4 border-t border-rim flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
     <div class="flex items-center gap-3">
-      <span class="font-mono text-2xs px-2 py-0.5 rounded border" id="badge-system-state">
+      <span class="font-mono text-2xs px-2 py-0.5 rounded border bg-live-dim text-live border-live/30" id="badge-system-state">
         {isEn ? 'STATUS: HEALTHY' : 'ESTADO: SALUDABLE'}
       </span>
       <p class="text-xs text-ink-2" id="text-system-explanation">
         {isEn
-          ? 'Event pipeline is processing messages asynchronously with 99.99% throughput.'
-          : 'El pipeline procesa transacciones de forma asincrónica con 99.99% de entrega efectiva.'}
+          ? 'Normal flow: transactions are processed asynchronously and persisted safely.'
+          : 'Flujo normal: las transacciones se procesan de forma asincrónica y se persisten de manera segura.'}
       </p>
     </div>
 
@@ -143,8 +143,8 @@ const isEn = locale === 'en';
         <strong class="text-ink" id="metric-retries">0/s</strong>
       </div>
       <div>
-        <span>Data Loss: </span>
-        <strong class="text-live font-semibold" id="metric-loss">0%</strong>
+        <span>{isEn ? 'Retention: ' : 'Retención: '}</span>
+        <strong class="text-live font-semibold" id="metric-loss">{isEn ? '100% delivered' : '100% entregado'}</strong>
       </div>
     </div>
   </div>
@@ -215,14 +215,14 @@ const isEn = locale === 'en';
       }
       if (textExplanation) {
         textExplanation.textContent = isEn
-          ? 'Event pipeline is processing messages asynchronously with 99.99% throughput.'
-          : 'El pipeline procesa transacciones de forma asincrónica con 99.99% de entrega efectiva.';
+          ? 'Normal flow: transactions are processed asynchronously and persisted safely.'
+          : 'Flujo normal: las transacciones se procesan de forma asincrónica y se persisten de manera segura.';
       }
 
       if (metricDlq) metricDlq.textContent = '0 msgs';
       if (metricRetries) metricRetries.textContent = '0/s';
       if (metricLoss) {
-        metricLoss.textContent = '0%';
+        metricLoss.textContent = isEn ? '100% delivered' : '100% entregado';
         metricLoss.className = 'text-live font-semibold';
       }
     }
@@ -244,7 +244,7 @@ const isEn = locale === 'en';
         dotDb.className = 'w-2 h-2 rounded-full bg-red-500 animate-ping';
       }
       if (dbTitle) dbTitle.textContent = isEn ? 'DB Outage (503)' : 'Base Caída (503)';
-      if (descDb) descDb.textContent = isEn ? 'Connection pool timeout' : 'Timeout de conexiones';
+      if (descDb) descDb.textContent = isEn ? 'Connection timeout' : 'Timeout de conexión';
 
       // Worker en reintentos
       if (nodeWorker) {
@@ -260,18 +260,18 @@ const isEn = locale === 'en';
       // Estado general
       if (badgeState) {
         badgeState.className = 'font-mono text-2xs px-2 py-0.5 rounded border bg-warn-dim text-warn border-warn/30';
-        badgeState.textContent = isEn ? 'STATUS: RESILIENCE ACTIVE' : 'ESTADO: RESILIENCIA ACTIVA';
+        badgeState.textContent = isEn ? 'STATUS: CONTROLLED DEGRADATION' : 'ESTADO: DEGRADACIÓN CONTROLADA';
       }
       if (textExplanation) {
         textExplanation.textContent = isEn
-          ? 'Kafka/SQS retains incoming traffic. Worker halts writes and sends poisonous events to DLQ. Client receives 202 Accepted. Zero data lost.'
-          : 'El broker amortigua el tráfico entrante. El worker suspende escritura y deriva mensajes a la DLQ. El cliente no percibe error. 0 datos perdidos.';
+          ? 'Controlled degradation: Queue holds incoming events with exponential backoff. Telemetry alerts the team while data remains safe.'
+          : 'Degradación controlada: La cola resguarda los pedidos entrantes con reintentos controlados. La observabilidad alerta al equipo y no se descartan datos.';
       }
 
       if (metricDlq) metricDlq.textContent = '14 msgs (safe)';
       if (metricRetries) metricRetries.textContent = '3/s backoff';
       if (metricLoss) {
-        metricLoss.textContent = '0% (ZERO)';
+        metricLoss.textContent = isEn ? '100% queued (safe)' : '100% en cola (protegido)';
         metricLoss.className = 'text-live font-semibold';
       }
     }

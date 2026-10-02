@@ -17,9 +17,9 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 >
   <!-- Grid de fondo — sutil, no decorativo -->
   <div
-    class="pointer-events-none absolute inset-0 opacity-[0.025]"
+    class="pointer-events-none absolute inset-0 opacity-[0.035]"
     aria-hidden="true"
-    style="background-image: linear-gradient(to right, #c9a227 1px, transparent 1px), linear-gradient(to bottom, #c9a227 1px, transparent 1px); background-size: 64px 64px;"
+    style="background-image: linear-gradient(to right, var(--gold) 1px, transparent 1px), linear-gradient(to bottom, var(--gold) 1px, transparent 1px); background-size: 64px 64px;"
   ></div>
 
   <div class="wrap relative z-10">
@@ -31,7 +31,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <!-- Terminal interactiva -->
     <div
-      class="max-w-xl mb-8 border border-rim rounded-md bg-surface/90 backdrop-blur overflow-hidden animate-fade-up font-mono text-xs"
+      class="max-w-xl mb-8 border border-rim rounded-md bg-surface/90 backdrop-blur overflow-hidden animate-fade-up font-mono text-xs shadow-sm"
       style="animation-delay: 100ms; animation-fill-mode: both;"
     >
       <!-- Terminal header -->
@@ -55,7 +55,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
           </p>
         </div>
         <div class="text-ink-3 text-2xs">
-          {locale === 'en' ? "Tip: Try typing 'help', 'stack', 'contact', 'cv' or 'clear'" : "Tip: Probá escribir 'help', 'stack', 'contact', 'cv' o 'clear'"}
+          {locale === 'en' ? "Tip: Try typing 'help', 'services', 'letter', 'contact', 'cv' or 'clear'" : "Tip: Probá escribir 'help', 'servicios', 'carta', 'contacto', 'cv' o 'clear'"}
         </div>
       </div>
 
@@ -99,13 +99,23 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       class="flex flex-wrap items-center gap-3.5 animate-fade-up"
       style="animation-delay: 400ms; animation-fill-mode: both;"
     >
-      <!-- Ver experiencia -->
-      <a href="#experience" class="btn-primary">
+      <!-- CTA Principal: Charlemos de tu problema -->
+      <a href="#contact" class="btn-primary">
         {t.ctaExperience}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="12" y1="5" x2="12" y2="19"/>
-          <polyline points="19 12 12 19 5 12"/>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
+      </a>
+
+      <!-- Carta Profesional -->
+      <a href="#letter" class="btn-ghost">
+        {locale === 'en' ? 'Open Letter' : 'Carta profesional'}
+      </a>
+
+      <!-- Soluciones -->
+      <a href="#services" class="btn-ghost">
+        {locale === 'en' ? 'Solutions' : 'Soluciones'}
       </a>
 
       <!-- Descargar CV -->
@@ -147,12 +157,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
         class="btn-ghost"
         aria-label="Ver perfil de LinkedIn"
       >
-        LinkedIn
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
-        </svg>
+        LinkedIn ↗
       </a>
 
       <!-- GitHub -->
@@ -214,10 +219,14 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     if (!form || !input || !output) return;
 
     const commands: Record<string, string> = {
-      help: 'Comandos disponibles: whoami, ai, stack, experience, projects, contact, cv, clear, sudo',
-      whoami: 'Ezequiel Gonzalez — Full Stack Developer con foco en Backend, Cloud & Microservicios Event-Driven.',
-      ai: 'Herramientas de IA y Agentes: Google Antigravity, Claude Code, ChatGPT Codex, IBM watsonx. Flujos agénticos y automatización en desarrollo backend.',
-      stack: 'Backend: .NET 6/C#, Node.js | Cloud: AWS (ECS, Lambda, SQS, SNS) | Broker: Kafka | Telemetría: Dynatrace, Grafana | IA: Antigravity, Claude Code, Codex, watsonx',
+      help: 'Comandos: whoami, servicios, carta, ai, stack, experience, projects, contact, cv, clear',
+      whoami: 'Ezequiel Gonzalez — Desarrollador Full Stack & Cloud enfocado en Backend (.NET, Node.js, AWS). Soluciones prácticas y código limpio.',
+      carta: 'Carta abierta: No vendo humo ni sistemas mágicos. En software las cosas fallan; mi valor es diseñar con criterio, reintentos seguros, observabilidad y honestidad.',
+      letter: 'Open Letter: No jargon or magic promises. Things fail in real software; my value is engineering judgment, resilience, observability, and honest communication.',
+      servicios: 'Soluciones: 1) Rendimiento y escala backend, 2) Nuevas APIs/productos, 3) Modernización legacy, 4) Integraciones bancarias/pagos, 5) Desarrollo asistido con IA.',
+      services: 'Solutions: 1) Backend scale & performance, 2) New APIs & products, 3) Legacy modernization, 4) Banking & payment integrations, 5) AI-assisted velocity.',
+      ai: 'IA y Flujos Agénticos: Google Antigravity, Claude Code, ChatGPT Codex, IBM watsonx. Automatización con criterio técnico.',
+      stack: 'Backend: .NET 6/C#, Node.js, TypeScript | Cloud: AWS | Broker: Kafka, SQS | DB: SQL Server, PostgreSQL | Telemetría: Dynatrace, Grafana',
       experience: 'IBM (Banco Supervielle COMEX) -> Tecnosoftware (BCRA) -> Ministerio de Trabajo.',
       projects: 'career-os (Live), Event-Driven Architecture (In-Progress), Observability Stack (Planned), Grupo Mezzo (Live)',
       contact: 'Email: ezequiel140901@gmail.com | LinkedIn: /in/ezequiel-gonzalez14',
