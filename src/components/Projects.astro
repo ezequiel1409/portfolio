@@ -1,10 +1,20 @@
 ---
-import { PROJECTS } from '../data/portfolio.data';
+import { getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { projects: t } = data.ui;
+const projectList = data.projects;
+const isEn = locale === 'en';
 
 const statusLabel: Record<string, string> = {
-  live: 'Live',
-  'in-progress': 'En progreso',
-  planned: 'Planificado',
+  live: isEn ? 'Live' : 'Live',
+  'in-progress': isEn ? 'In Progress' : 'En progreso',
+  planned: isEn ? 'Planned' : 'Planificado',
 };
 ---
 
@@ -12,18 +22,17 @@ const statusLabel: Record<string, string> = {
   <div class="wrap">
 
     <header class="mb-12">
-      <p class="eyebrow mb-4">Proyectos</p>
+      <p class="eyebrow mb-4">{t.eyebrow}</p>
       <h2 id="projects-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
-        Ingeniería visible
+        {t.heading}
       </h2>
       <p class="text-ink-2 text-sm mt-3 max-w-xl">
-        Cada proyecto responde una pregunta: ¿qué habilidad de ingeniería
-        demuestra esto que los demás no demuestran ya?
+        {t.subheading}
       </p>
     </header>
 
     <div class="grid sm:grid-cols-2 gap-5">
-      {PROJECTS.map((project) => (
+      {projectList.map((project) => (
         <article
           class="group border border-rim rounded-lg p-6 bg-surface hover:border-rim-active transition-colors duration-200 flex flex-col"
           aria-label={project.title}
@@ -76,7 +85,7 @@ const statusLabel: Record<string, string> = {
               class="inline-flex items-center gap-1.5 font-mono text-xs text-gold hover:text-gold-dim transition-colors mt-auto"
               aria-label={`Ver ${project.title}`}
             >
-              {project.href.includes('github.com') ? 'Ver repositorio' : 'Visitar sitio'}
+              {project.href.includes('github.com') ? t.repoBtn : t.liveBtn}
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                 <polyline points="15 3 21 3 21 9"/>

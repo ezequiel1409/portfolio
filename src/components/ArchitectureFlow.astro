@@ -1,0 +1,285 @@
+---
+interface Props {
+  flowTitle?: string;
+  flowSub?: string;
+  locale?: 'es' | 'en';
+}
+
+const {
+  flowTitle = 'Resilience Explorer — Arquitectura Event-Driven',
+  flowSub = 'Visualizá el flujo de una transacción en producción y simulá una caída de infraestructura para ver cómo el sistema degrada sin pérdida de datos.',
+  locale = 'es',
+} = Astro.props;
+
+const isEn = locale === 'en';
+---
+
+<div class="border border-rim rounded-lg p-6 bg-surface mb-12 overflow-hidden relative">
+  <!-- Header de la herramienta -->
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-5 border-b border-rim">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+        <h3 class="font-display text-base text-ink font-medium">
+          {flowTitle}
+        </h3>
+      </div>
+      <p class="text-xs text-ink-2 mt-1 max-w-xl">
+        {flowSub}
+      </p>
+    </div>
+
+    <!-- Toggle de Modo / Simulación -->
+    <div class="flex items-center p-1 bg-surface-2 border border-rim rounded">
+      <button
+        id="btn-flow-normal"
+        type="button"
+        class="px-3 py-1.5 text-xs font-mono rounded-sm transition-colors text-ink bg-surface border border-rim-active flex items-center gap-1.5"
+        aria-pressed="true"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-live"></span>
+        {isEn ? 'Normal Flow' : 'Flujo Normal'}
+      </button>
+      <button
+        id="btn-flow-fault"
+        type="button"
+        class="px-3 py-1.5 text-xs font-mono rounded-sm transition-colors text-ink-3 hover:text-ink flex items-center gap-1.5"
+        aria-pressed="false"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-warn"></span>
+        {isEn ? 'Simulate DB Outage' : 'Simular Caída de Base'}
+      </button>
+    </div>
+  </div>
+
+  <!-- Pipeline visual de nodos -->
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-3 relative py-4">
+    <!-- Nodo 1: Cliente / BFF -->
+    <div class="border border-rim rounded p-3.5 bg-surface-2 flex flex-col justify-between relative group/node">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-2xs text-ink-3">01. INGESTION</span>
+        <span class="w-2 h-2 rounded-full bg-live" id="status-dot-1"></span>
+      </div>
+      <p class="font-display text-sm text-ink font-medium">BFF / Client</p>
+      <p class="font-mono text-2xs text-gold mt-1">Angular / API Connect</p>
+      <span class="text-2xs text-ink-3 mt-2 block" id="node-desc-1">
+        {isEn ? 'HTTP 202 Accepted' : 'HTTP 202 Accepted'}
+      </span>
+    </div>
+
+    <!-- Nodo 2: Message Broker -->
+    <div class="border border-rim rounded p-3.5 bg-surface-2 flex flex-col justify-between relative">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-2xs text-ink-3">02. BUFFER</span>
+        <span class="w-2 h-2 rounded-full bg-live" id="status-dot-2"></span>
+      </div>
+      <p class="font-display text-sm text-ink font-medium">Broker Queue</p>
+      <p class="font-mono text-2xs text-gold mt-1">Kafka / AWS SQS</p>
+      <span class="text-2xs text-ink-3 mt-2 block" id="node-desc-2">
+        {isEn ? 'Retention: 14 days' : 'Retención: 14 días'}
+      </span>
+    </div>
+
+    <!-- Nodo 3: Worker Consumer -->
+    <div class="border border-rim rounded p-3.5 bg-surface-2 flex flex-col justify-between relative" id="node-worker">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-2xs text-ink-3">03. WORKER</span>
+        <span class="w-2 h-2 rounded-full bg-live" id="status-dot-3"></span>
+      </div>
+      <p class="font-display text-sm text-ink font-medium">Consumer Service</p>
+      <p class="font-mono text-2xs text-gold mt-1">.NET 6 / ECS Task</p>
+      <span class="text-2xs text-ink-3 mt-2 block" id="node-desc-3">
+        {isEn ? 'Idempotent consumer' : 'Consumo idempotente'}
+      </span>
+    </div>
+
+    <!-- Nodo 4: Datastore -->
+    <div class="border border-rim rounded p-3.5 bg-surface-2 flex flex-col justify-between relative transition-all" id="node-db">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-2xs text-ink-3">04. STORAGE</span>
+        <span class="w-2 h-2 rounded-full bg-live" id="status-dot-4"></span>
+      </div>
+      <p class="font-display text-sm text-ink font-medium" id="db-title">Primary DB</p>
+      <p class="font-mono text-2xs text-gold mt-1" id="db-tech">PostgreSQL / DynamoDB</p>
+      <span class="text-2xs text-ink-3 mt-2 block" id="node-desc-4">
+        {isEn ? 'Healthy read/write' : 'Escritura normal'}
+      </span>
+    </div>
+
+    <!-- Nodo 5: Observability -->
+    <div class="border border-rim rounded p-3.5 bg-surface-2 flex flex-col justify-between relative col-span-2 md:col-span-1" id="node-obs">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-2xs text-ink-3">05. TELEMETRY</span>
+        <span class="w-2 h-2 rounded-full bg-live" id="status-dot-5"></span>
+      </div>
+      <p class="font-display text-sm text-ink font-medium">Observability</p>
+      <p class="font-mono text-2xs text-gold mt-1">Dynatrace / Grafana</p>
+      <span class="text-2xs text-ink-3 mt-2 block" id="node-desc-5">
+        {isEn ? 'p99 latency: 24ms' : 'p99 latency: 24ms'}
+      </span>
+    </div>
+  </div>
+
+  <!-- Panel de estado del sistema -->
+  <div class="mt-4 pt-4 border-t border-rim flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-2xs px-2 py-0.5 rounded border" id="badge-system-state">
+        {isEn ? 'STATUS: HEALTHY' : 'ESTADO: SALUDABLE'}
+      </span>
+      <p class="text-xs text-ink-2" id="text-system-explanation">
+        {isEn
+          ? 'Event pipeline is processing messages asynchronously with 99.99% throughput.'
+          : 'El pipeline procesa transacciones de forma asincrónica con 99.99% de entrega efectiva.'}
+      </p>
+    </div>
+
+    <div class="flex items-center gap-4 text-xs font-mono text-ink-3 shrink-0">
+      <div>
+        <span>DLQ: </span>
+        <strong class="text-ink" id="metric-dlq">0 msgs</strong>
+      </div>
+      <div>
+        <span>Retries: </span>
+        <strong class="text-ink" id="metric-retries">0/s</strong>
+      </div>
+      <div>
+        <span>Data Loss: </span>
+        <strong class="text-live font-semibold" id="metric-loss">0%</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupArchitectureFlow() {
+    const btnNormal = document.getElementById('btn-flow-normal');
+    const btnFault = document.getElementById('btn-flow-fault');
+    if (!btnNormal || !btnFault) return;
+
+    const nodeDb = document.getElementById('node-db');
+    const dbTitle = document.getElementById('db-title');
+    const dotDb = document.getElementById('status-dot-4');
+    const descDb = document.getElementById('node-desc-4');
+
+    const nodeWorker = document.getElementById('node-worker');
+    const dotWorker = document.getElementById('status-dot-3');
+    const descWorker = document.getElementById('node-desc-3');
+
+    const dotObs = document.getElementById('status-dot-5');
+    const descObs = document.getElementById('node-desc-5');
+
+    const badgeState = document.getElementById('badge-system-state');
+    const textExplanation = document.getElementById('text-system-explanation');
+
+    const metricDlq = document.getElementById('metric-dlq');
+    const metricRetries = document.getElementById('metric-retries');
+    const metricLoss = document.getElementById('metric-loss');
+
+    const isEn = document.documentElement.lang.startsWith('en');
+
+    function setNormal() {
+      btnNormal?.setAttribute('aria-pressed', 'true');
+      btnFault?.setAttribute('aria-pressed', 'false');
+      btnNormal?.classList.add('bg-surface', 'border', 'border-rim-active', 'text-ink');
+      btnNormal?.classList.remove('text-ink-3');
+      btnFault?.classList.remove('bg-surface', 'border', 'border-rim-active', 'text-ink');
+      btnFault?.classList.add('text-ink-3');
+
+      // Restaurar nodo DB
+      if (nodeDb) {
+        nodeDb.classList.remove('border-red-500/60', 'bg-red-950/20');
+        nodeDb.classList.add('border-rim', 'bg-surface-2');
+      }
+      if (dotDb) {
+        dotDb.className = 'w-2 h-2 rounded-full bg-live';
+      }
+      if (dbTitle) dbTitle.textContent = 'Primary DB';
+      if (descDb) descDb.textContent = isEn ? 'Healthy read/write' : 'Escritura normal';
+
+      // Restaurar Worker
+      if (nodeWorker) {
+        nodeWorker.classList.remove('border-warn/60');
+        nodeWorker.classList.add('border-rim');
+      }
+      if (dotWorker) dotWorker.className = 'w-2 h-2 rounded-full bg-live';
+      if (descWorker) descWorker.textContent = isEn ? 'Idempotent consumer' : 'Consumo idempotente';
+
+      // Restaurar Observabilidad
+      if (dotObs) dotObs.className = 'w-2 h-2 rounded-full bg-live';
+      if (descObs) descObs.textContent = isEn ? 'p99 latency: 24ms' : 'p99 latency: 24ms';
+
+      // Estado general
+      if (badgeState) {
+        badgeState.className = 'font-mono text-2xs px-2 py-0.5 rounded border bg-live-dim text-live border-live/30';
+        badgeState.textContent = isEn ? 'STATUS: HEALTHY' : 'ESTADO: SALUDABLE';
+      }
+      if (textExplanation) {
+        textExplanation.textContent = isEn
+          ? 'Event pipeline is processing messages asynchronously with 99.99% throughput.'
+          : 'El pipeline procesa transacciones de forma asincrónica con 99.99% de entrega efectiva.';
+      }
+
+      if (metricDlq) metricDlq.textContent = '0 msgs';
+      if (metricRetries) metricRetries.textContent = '0/s';
+      if (metricLoss) {
+        metricLoss.textContent = '0%';
+        metricLoss.className = 'text-live font-semibold';
+      }
+    }
+
+    function setFault() {
+      btnFault?.setAttribute('aria-pressed', 'true');
+      btnNormal?.setAttribute('aria-pressed', 'false');
+      btnFault?.classList.add('bg-surface', 'border', 'border-rim-active', 'text-ink');
+      btnFault?.classList.remove('text-ink-3');
+      btnNormal?.classList.remove('bg-surface', 'border', 'border-rim-active', 'text-ink');
+      btnNormal?.classList.add('text-ink-3');
+
+      // Degradación DB
+      if (nodeDb) {
+        nodeDb.classList.remove('border-rim', 'bg-surface-2');
+        nodeDb.classList.add('border-red-500/60', 'bg-red-950/20');
+      }
+      if (dotDb) {
+        dotDb.className = 'w-2 h-2 rounded-full bg-red-500 animate-ping';
+      }
+      if (dbTitle) dbTitle.textContent = isEn ? 'DB Outage (503)' : 'Base Caída (503)';
+      if (descDb) descDb.textContent = isEn ? 'Connection pool timeout' : 'Timeout de conexiones';
+
+      // Worker en reintentos
+      if (nodeWorker) {
+        nodeWorker.classList.add('border-warn/60');
+      }
+      if (dotWorker) dotWorker.className = 'w-2 h-2 rounded-full bg-warn animate-pulse';
+      if (descWorker) descWorker.textContent = isEn ? 'Exponential Backoff (3x)' : 'Backoff Exponencial (3x)';
+
+      // Observabilidad detecta alerta
+      if (dotObs) dotObs.className = 'w-2 h-2 rounded-full bg-warn';
+      if (descObs) descObs.textContent = isEn ? 'Dynatrace Alert: Triggered' : 'Dynatrace: Alerta disparada';
+
+      // Estado general
+      if (badgeState) {
+        badgeState.className = 'font-mono text-2xs px-2 py-0.5 rounded border bg-warn-dim text-warn border-warn/30';
+        badgeState.textContent = isEn ? 'STATUS: RESILIENCE ACTIVE' : 'ESTADO: RESILIENCIA ACTIVA';
+      }
+      if (textExplanation) {
+        textExplanation.textContent = isEn
+          ? 'Kafka/SQS retains incoming traffic. Worker halts writes and sends poisonous events to DLQ. Client receives 202 Accepted. Zero data lost.'
+          : 'El broker amortigua el tráfico entrante. El worker suspende escritura y deriva mensajes a la DLQ. El cliente no percibe error. 0 datos perdidos.';
+      }
+
+      if (metricDlq) metricDlq.textContent = '14 msgs (safe)';
+      if (metricRetries) metricRetries.textContent = '3/s backoff';
+      if (metricLoss) {
+        metricLoss.textContent = '0% (ZERO)';
+        metricLoss.className = 'text-live font-semibold';
+      }
+    }
+
+    btnNormal.addEventListener('click', setNormal);
+    btnFault.addEventListener('click', setFault);
+  }
+
+  setupArchitectureFlow();
+  document.addEventListener('astro:after-swap', setupArchitectureFlow);
+</script>

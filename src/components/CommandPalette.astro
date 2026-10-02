@@ -1,0 +1,382 @@
+---
+import { SOCIAL, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const isEn = locale === 'en';
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!-- Modal Command Palette -->
+<div
+  id="cmd-palette-backdrop"
+  class="fixed inset-0 z-50 bg-canvas/80 backdrop-blur-sm hidden items-start justify-center pt-20 px-4 transition-opacity duration-150"
+  role="dialog"
+  aria-modal="true"
+  aria-label={isEn ? 'Command Palette' : 'Paleta de Comandos'}
+>
+  <div
+    id="cmd-palette-modal"
+    class="w-full max-w-xl bg-surface border border-rim-active rounded-lg shadow-2xl overflow-hidden flex flex-col animate-fade-up"
+  >
+    <!-- Search Bar -->
+    <div class="flex items-center px-4 py-3 border-b border-rim gap-3">
+      <span class="text-gold font-mono text-sm select-none" aria-hidden="true">&gt;</span>
+      <input
+        id="cmd-input"
+        type="text"
+        placeholder={isEn ? 'Type a command or jump to section (e.g. experience, cv, stack)...' : 'Escribí un comando o sección (ej. experiencia, cv, stack)...'}
+        class="w-full bg-transparent text-ink placeholder:text-ink-3 text-sm font-mono focus:outline-none"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <kbd class="hidden sm:inline-block font-mono text-2xs px-1.5 py-0.5 border border-rim rounded text-ink-3">
+        ESC
+      </kbd>
+    </div>
+
+    <!-- Commands List -->
+    <div id="cmd-list" class="max-h-80 overflow-y-auto p-2 flex flex-col gap-1" role="listbox">
+      <!-- Section: Navegación -->
+      <div class="px-3 py-1.5 font-mono text-2xs uppercase tracking-wider text-ink-3">
+        {isEn ? 'Navigation' : 'Navegación'}
+      </div>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="navigate"
+        data-target="#experience"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">#</span>
+          <span>{isEn ? 'Experience' : 'Experiencia'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3 group-hover:text-gold transition-colors">{isEn ? 'Jump' : 'Ir'}</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="navigate"
+        data-target="#projects"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">#</span>
+          <span>{isEn ? 'Projects' : 'Proyectos'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3 group-hover:text-gold transition-colors">{isEn ? 'Jump' : 'Ir'}</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="navigate"
+        data-target="#stack"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">#</span>
+          <span>{isEn ? 'Technology Stack' : 'Stack Tecnológico'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3 group-hover:text-gold transition-colors">{isEn ? 'Jump' : 'Ir'}</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="navigate"
+        data-target="#architecture"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">#</span>
+          <span>{isEn ? 'Architecture & Simulator' : 'Arquitectura & Simulador'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3 group-hover:text-gold transition-colors">{isEn ? 'Jump' : 'Ir'}</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="navigate"
+        data-target="#war-stories"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">#</span>
+          <span>{isEn ? 'War Stories & Incidents' : 'Casos Reales & Post-Mortems'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3 group-hover:text-gold transition-colors">{isEn ? 'Jump' : 'Ir'}</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="navigate"
+        data-target="#contact"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">#</span>
+          <span>{isEn ? 'Contact' : 'Contacto'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3 group-hover:text-gold transition-colors">{isEn ? 'Jump' : 'Ir'}</span>
+      </button>
+
+      <!-- Section: Acciones -->
+      <div class="px-3 py-1.5 mt-2 font-mono text-2xs uppercase tracking-wider text-ink-3">
+        {isEn ? 'Quick Actions' : 'Acciones Rápidas'}
+      </div>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="copy-email"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">@</span>
+          <span>{isEn ? 'Copy Email Address' : 'Copiar Dirección de Email'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3">{SOCIAL.email}</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="download-cv"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">↓</span>
+          <span>{isEn ? 'Download Resume (PDF)' : 'Descargar CV en PDF'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3">PDF</span>
+      </button>
+
+      <button
+        type="button"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group cursor-pointer"
+        data-action="toggle-theme"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">◐</span>
+          <span>{isEn ? 'Toggle Theme (Dark / Light)' : 'Alternar Tema (Dark / Light)'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3">Theme</span>
+      </button>
+
+      <a
+        href={isEn ? `${baseUrl}/` : `${baseUrl}/en/`}
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">🌐</span>
+          <span>{isEn ? 'Cambiar a Español' : 'Switch to English'}</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3">{isEn ? 'ES' : 'EN'}</span>
+      </a>
+
+      <a
+        href={SOCIAL.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">↗</span>
+          <span>LinkedIn</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3">Profile</span>
+      </a>
+
+      <a
+        href={SOCIAL.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cmd-item flex items-center justify-between px-3 py-2 rounded text-left text-sm text-ink-2 hover:text-ink hover:bg-surface-2 transition-colors group"
+        role="option"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="text-gold font-mono text-xs">↗</span>
+          <span>GitHub</span>
+        </div>
+        <span class="font-mono text-2xs text-ink-3">Code</span>
+      </a>
+    </div>
+
+    <!-- Footer helper -->
+    <div class="px-4 py-2 border-t border-rim bg-surface-2/40 flex items-center justify-between text-2xs font-mono text-ink-3">
+      <div class="flex items-center gap-2">
+        <span>↑↓ Navigate</span>
+        <span>↵ Select</span>
+        <span>ESC Close</span>
+      </div>
+      <span>Ezequiel Gonzalez</span>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Feedback -->
+<div
+  id="cmd-toast"
+  class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded bg-surface border border-gold text-gold font-mono text-xs shadow-xl opacity-0 pointer-events-none transition-opacity duration-200 flex items-center gap-2"
+>
+  <span class="w-2 h-2 rounded-full bg-live"></span>
+  <span id="cmd-toast-text">{isEn ? 'Email copied to clipboard!' : '¡Email copiado al portapapeles!'}</span>
+</div>
+
+<script>
+  function setupCommandPalette() {
+    const backdrop = document.getElementById('cmd-palette-backdrop');
+    const input = document.getElementById('cmd-input') as HTMLInputElement;
+    const items = document.querySelectorAll('.cmd-item');
+    const toast = document.getElementById('cmd-toast');
+    const toastText = document.getElementById('cmd-toast-text');
+
+    if (!backdrop || !input) return;
+
+    let selectedIndex = 0;
+
+    function showToast(msg: string) {
+      if (!toast) return;
+      if (toastText) toastText.textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    function openPalette() {
+      backdrop?.classList.remove('hidden');
+      backdrop?.classList.add('flex');
+      input.value = '';
+      filterItems('');
+      selectedIndex = 0;
+      highlightSelected();
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closePalette() {
+      backdrop?.classList.add('hidden');
+      backdrop?.classList.remove('flex');
+    }
+
+    function filterItems(query: string) {
+      const q = query.toLowerCase().trim();
+      items.forEach((item) => {
+        const text = item.textContent?.toLowerCase() || '';
+        const match = text.includes(q);
+        (item as HTMLElement).style.display = match ? 'flex' : 'none';
+      });
+    }
+
+    function highlightSelected() {
+      const visible = Array.from(items).filter((i) => (i as HTMLElement).style.display !== 'none');
+      visible.forEach((item, idx) => {
+        if (idx === selectedIndex) {
+          item.classList.add('bg-surface-2', 'text-ink');
+          (item as HTMLElement).scrollIntoView({ block: 'nearest' });
+        } else {
+          item.classList.remove('bg-surface-2', 'text-ink');
+        }
+      });
+    }
+
+    // Trigger de teclado: Ctrl+K / Cmd+K
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (backdrop.classList.contains('hidden')) {
+          openPalette();
+        } else {
+          closePalette();
+        }
+      } else if (e.key === 'Escape' && !backdrop.classList.contains('hidden')) {
+        closePalette();
+      }
+    });
+
+    // Abrir mediante botones con data-open-cmd
+    document.querySelectorAll('[data-open-cmd]').forEach((btn) => {
+      btn.addEventListener('click', openPalette);
+    });
+
+    // Cerrar al clickear backdrop fuera del modal
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        closePalette();
+      }
+    });
+
+    // Input search
+    input.addEventListener('input', () => {
+      filterItems(input.value);
+      selectedIndex = 0;
+      highlightSelected();
+    });
+
+    // Navegación con flechas
+    input.addEventListener('keydown', (e) => {
+      const visible = Array.from(items).filter((i) => (i as HTMLElement).style.display !== 'none');
+      if (visible.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex + 1) % visible.length;
+        highlightSelected();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex - 1 + visible.length) % visible.length;
+        highlightSelected();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const selected = visible[selectedIndex] as HTMLElement;
+        if (selected) {
+          selected.click();
+        }
+      }
+    });
+
+    // Manejo de acciones
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        const action = item.getAttribute('data-action');
+        const target = item.getAttribute('data-target');
+
+        if (action === 'navigate' && target) {
+          closePalette();
+          const el = document.querySelector(target);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else if (action === 'copy-email') {
+          navigator.clipboard.writeText('ezequiel140901@gmail.com');
+          closePalette();
+          showToast('ezequiel140901@gmail.com copiado al portapapeles');
+        } else if (action === 'download-cv') {
+          closePalette();
+          window.open('/portfolio/cv-ezequiel-gonzalez.pdf', '_blank');
+        } else if (action === 'toggle-theme') {
+          const themeBtn = document.getElementById('theme-toggle');
+          themeBtn?.click();
+          closePalette();
+        } else {
+          closePalette();
+        }
+      });
+    });
+  }
+
+  setupCommandPalette();
+  document.addEventListener('astro:after-swap', setupCommandPalette);
+</script>

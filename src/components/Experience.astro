@@ -1,14 +1,27 @@
 ---
-import { EXPERIENCE } from '../data/portfolio.data';
+import { getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const entries = data.experience;
+const isEn = locale === 'en';
 ---
 
 <section id="experience" class="section-rule" aria-labelledby="experience-heading">
   <div class="wrap">
 
     <header class="mb-12">
-      <p class="eyebrow mb-4">Experiencia</p>
+      <p class="eyebrow mb-4">{isEn ? 'Experience' : 'Experiencia'}</p>
       <h2 id="experience-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
-        4+ años en sistemas<br class="hidden sm:inline" /> de alta disponibilidad
+        {isEn ? (
+          <>4+ years in<br class="hidden sm:inline" /> high-availability systems</>
+        ) : (
+          <>4+ años en sistemas<br class="hidden sm:inline" /> de alta disponibilidad</>
+        )}
       </h2>
     </header>
 
@@ -20,7 +33,7 @@ import { EXPERIENCE } from '../data/portfolio.data';
       ></div>
 
       <div class="flex flex-col gap-10">
-        {EXPERIENCE.map((entry) => (
+        {entries.map((entry) => (
           <article
             class="group relative md:pl-10"
             aria-label={`${entry.company} — ${entry.role}`}
@@ -45,7 +58,7 @@ import { EXPERIENCE } from '../data/portfolio.data';
                       {entry.company}
                     </h3>
                     {entry.current && (
-                      <span class="status-live text-2xs">actual</span>
+                      <span class="status-live text-2xs">{isEn ? 'current' : 'actual'}</span>
                     )}
                   </div>
                   {entry.client && (
@@ -56,7 +69,7 @@ import { EXPERIENCE } from '../data/portfolio.data';
                 </div>
 
                 <div class="text-right shrink-0">
-                  <p class="font-mono text-2xs text-ink-3">{entry.period}</p>
+                  <p class="font-mono text-2xs text-ink-2">{entry.period}</p>
                   <p class="font-mono text-2xs text-ink-3 mt-0.5">{entry.location}</p>
                 </div>
               </div>

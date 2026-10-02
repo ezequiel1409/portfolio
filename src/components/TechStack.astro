@@ -1,23 +1,31 @@
 ---
-import { TECH } from '../data/portfolio.data';
+import { getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { stack: t } = data.ui;
+const techCategories = data.tech;
 ---
 
 <section id="stack" class="section-rule" aria-labelledby="stack-heading">
   <div class="wrap">
 
     <header class="mb-12">
-      <p class="eyebrow mb-4">Stack</p>
+      <p class="eyebrow mb-4">{t.eyebrow}</p>
       <h2 id="stack-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
-        Tecnologías en producción
+        {t.heading}
       </h2>
       <p class="text-ink-2 text-sm mt-3 max-w-xl">
-        No es una lista de cosas que usé una vez. Es lo que usé en proyectos
-        financieros reales, con carga real, con consecuencias reales.
+        {t.subheading}
       </p>
     </header>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {TECH.map((category) => (
+      {techCategories.map((category) => (
         <div>
           <h3 class="font-mono text-2xs uppercase tracking-widest text-ink-3 mb-4 pb-2 border-b border-rim">
             {category.label}

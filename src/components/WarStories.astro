@@ -1,0 +1,107 @@
+---
+import { getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { warStories: t } = data.ui;
+const stories = data.warStories;
+---
+
+<section id="war-stories" class="section-rule" aria-labelledby="stories-heading">
+  <div class="wrap">
+
+    <header class="mb-12">
+      <p class="eyebrow mb-4">{t.eyebrow}</p>
+      <h2 id="stories-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
+        {t.heading}
+      </h2>
+      <p class="text-ink-2 text-sm mt-3 max-w-xl">
+        {t.subheading}
+      </p>
+    </header>
+
+    <div class="flex flex-col gap-6">
+      {stories.map((story) => (
+        <article
+          class="border border-rim rounded-lg p-6 bg-surface hover:border-rim-active transition-colors duration-200"
+          aria-label={story.title}
+        >
+          <!-- Category & Status -->
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-rim">
+            <span class="font-mono text-2xs uppercase tracking-wider text-gold flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+              {story.category}
+            </span>
+            <span class="font-mono text-2xs text-ink-3">
+              Case Ref: #{story.id}
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h3 class="font-display text-lg text-ink font-medium mb-6 leading-snug">
+            {story.title}
+          </h3>
+
+          <!-- Grid de 4 cuadrantes (Desafío, Diagnóstico, Solución, Impacto) -->
+          <div class="grid sm:grid-cols-2 gap-5 mb-6 text-sm">
+            <!-- Desafío -->
+            <div class="p-3.5 rounded bg-surface-2/60 border border-rim/60">
+              <p class="font-mono text-2xs text-warn uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-warn"></span>
+                {t.challengeLabel}
+              </p>
+              <p class="text-ink-2 text-xs leading-relaxed">
+                {story.challenge}
+              </p>
+            </div>
+
+            <!-- Diagnóstico -->
+            <div class="p-3.5 rounded bg-surface-2/60 border border-rim/60">
+              <p class="font-mono text-2xs text-ink-3 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+                {t.diagnosisLabel}
+              </p>
+              <p class="text-ink-2 text-xs leading-relaxed">
+                {story.diagnosis}
+              </p>
+            </div>
+
+            <!-- Solución -->
+            <div class="p-3.5 rounded bg-surface-2/60 border border-rim/60">
+              <p class="font-mono text-2xs text-gold uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                {t.solutionLabel}
+              </p>
+              <p class="text-ink-2 text-xs leading-relaxed">
+                {story.solution}
+              </p>
+            </div>
+
+            <!-- Impacto -->
+            <div class="p-3.5 rounded bg-surface-2/60 border border-rim/60">
+              <p class="font-mono text-2xs text-live uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-live"></span>
+                {t.impactLabel}
+              </p>
+              <p class="text-ink font-medium text-xs leading-relaxed">
+                {story.impact}
+              </p>
+            </div>
+          </div>
+
+          <!-- Badges de tecnología -->
+          <div class="flex flex-wrap gap-2 pt-2" role="list" aria-label="Tags de caso">
+            {story.tags.map((tag) => (
+              <span class="badge" role="listitem">{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>

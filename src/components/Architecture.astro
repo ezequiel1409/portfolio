@@ -1,30 +1,47 @@
 ---
-import { ARCH_PRINCIPLES } from '../data/portfolio.data';
+import { getPortfolioData, type Locale } from '../data/portfolio.data';
+import ArchitectureFlow from './ArchitectureFlow.astro';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { architecture: t } = data.ui;
+const principles = data.principles;
 ---
 
 <section id="architecture" class="section-rule" aria-labelledby="arch-heading">
   <div class="wrap">
 
     <header class="mb-12">
-      <p class="eyebrow mb-4">Arquitectura</p>
+      <p class="eyebrow mb-4">{t.eyebrow}</p>
       <h2 id="arch-heading" class="font-display text-3xl md:text-4xl text-ink tracking-tighter">
-        Cómo pienso los sistemas
+        {t.heading}
       </h2>
       <p class="text-ink-2 text-sm mt-3 max-w-xl">
-        Principios que definen cómo tomo decisiones de arquitectura —
-        derivados de problemas reales, no de lecturas de libros.
+        {t.subheading}
       </p>
     </header>
 
-    <div class="flex flex-col gap-0">
-      {ARCH_PRINCIPLES.map((principle, idx) => (
+    <!-- Interactive Architecture Resilience Simulator -->
+    <ArchitectureFlow
+      flowTitle={t.flowTitle}
+      flowSub={t.flowSub}
+      locale={locale}
+    />
+
+    <!-- Architectural Principles -->
+    <div class="flex flex-col gap-0 mt-8">
+      {principles.map((principle, idx) => (
         <article
           class="group flex gap-6 py-8 border-b border-rim last:border-b-0 hover:bg-surface-2/30 transition-colors rounded px-2 -mx-2"
           aria-label={principle.title}
         >
           <!-- Número -->
           <div
-            class="font-display text-4xl text-rim-active group-hover:text-gold transition-colors duration-200 leading-none pt-1 shrink-0 w-10 text-right select-none"
+            class="font-display text-4xl text-ink-3/40 group-hover:text-gold transition-colors duration-200 leading-none pt-1 shrink-0 w-10 text-right select-none"
             aria-hidden="true"
           >
             {String(idx + 1).padStart(2, '0')}

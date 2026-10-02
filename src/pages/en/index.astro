@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import Experience from '../../components/Experience.astro';
+import Projects from '../../components/Projects.astro';
+import TechStack from '../../components/TechStack.astro';
+import Architecture from '../../components/Architecture.astro';
+import WarStories from '../../components/WarStories.astro';
+import Footer from '../../components/Footer.astro';
+import CommandPalette from '../../components/CommandPalette.astro';
+---
+
+<Layout
+  title="Ezequiel Gonzalez — Full Stack Developer, Backend & Cloud"
+  description="I build systems that stay up when it matters. 4+ years in event-driven microservices, end-to-end observability, and production architecture that scales."
+>
+  <Header locale="en" />
+
+  <main id="main" tabindex="-1">
+    <Hero locale="en" />
+    <Experience locale="en" />
+    <Projects locale="en" />
+    <TechStack locale="en" />
+    <Architecture locale="en" />
+    <WarStories locale="en" />
+  </main>
+
+  <Footer locale="en" />
+  <CommandPalette locale="en" />
+</Layout>

@@ -1,7 +1,17 @@
 ---
-import { SOCIAL, CREDENTIALS } from '../data/portfolio.data';
+import { SOCIAL, getPortfolioData, type Locale } from '../data/portfolio.data';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { contact: t } = data.ui;
+const credentials = data.credentials;
+const isEn = locale === 'en';
 const year = new Date().getFullYear();
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <footer id="contact" class="border-t border-rim mt-0" role="contentinfo">
@@ -9,27 +19,58 @@ const year = new Date().getFullYear();
   <!-- Contact CTA -->
   <div class="wrap py-20">
     <div class="max-w-xl">
-      <p class="eyebrow mb-4">Contacto</p>
+      <p class="eyebrow mb-4">{t.eyebrow}</p>
       <h2 class="font-display text-3xl md:text-4xl text-ink tracking-tighter mb-4">
-        ¿Construimos algo serio?
+        {t.heading}
       </h2>
       <p class="text-ink-2 text-sm leading-relaxed mb-8">
-        Estoy disponible para roles remotos, proyectos puntuales y conversaciones
-        técnicas. Si lo que buscás es alguien que piense en términos de sistemas
-        antes que de features, tiene sentido que hablemos.
+        {t.body}
       </p>
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap items-center gap-3.5">
+        <!-- Escribirme -->
         <a
           href={`mailto:${SOCIAL.email}`}
           class="btn-primary"
           aria-label="Enviar email a Ezequiel Gonzalez"
         >
-          Escribirme
+          {t.sendEmail}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
             <polyline points="22,6 12,13 2,6"/>
           </svg>
         </a>
+
+        <!-- Copiar Email -->
+        <button
+          id="btn-footer-copy-email"
+          type="button"
+          class="btn-ghost cursor-pointer"
+          aria-label={t.copyEmailBtn}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="footer-copy-text">{t.copyEmailBtn}</span>
+        </button>
+
+        <!-- Descargar CV -->
+        <a
+          href={`${baseUrl}/cv-ezequiel-gonzalez.pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-ghost"
+          aria-label={isEn ? 'Download Resume' : 'Descargar CV'}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          {isEn ? 'Resume (PDF)' : 'CV (PDF)'}
+        </a>
+
+        <!-- LinkedIn -->
         <a
           href={SOCIAL.linkedin}
           target="_blank"
@@ -47,17 +88,17 @@ const year = new Date().getFullYear();
   <div class="border-t border-rim">
     <div class="wrap py-10">
       <p class="font-mono text-2xs uppercase tracking-widest text-ink-3 mb-5">
-        Educación & Credenciales
+        {t.credentialsTitle}
       </p>
       <div class="flex flex-col gap-3">
-        {CREDENTIALS.map((c) => (
+        {credentials.map((c) => (
           <div class="flex flex-wrap items-baseline justify-between gap-2">
             <div class="flex items-baseline gap-2">
               <span class="text-sm text-ink">{c.label}</span>
               <span class="font-mono text-2xs text-ink-3">{c.org}</span>
             </div>
             {c.period && (
-              <span class="font-mono text-2xs text-ink-3 shrink-0">{c.period}</span>
+              <span class="font-mono text-2xs text-ink-2 shrink-0">{c.period}</span>
             )}
           </div>
         ))}
@@ -112,10 +153,32 @@ const year = new Date().getFullYear();
 
       <!-- Build info -->
       <span class="font-mono text-2xs text-ink-3 hidden sm:inline">
-        Built with Astro · Static · GitHub Pages
+        Built with Astro 5 · Static · 0 KB JS
       </span>
 
     </div>
   </div>
 
 </footer>
+
+<script>
+  function setupFooterCopy() {
+    const btn = document.getElementById('btn-footer-copy-email');
+    const text = document.getElementById('footer-copy-text');
+    if (!btn || !text) return;
+
+    const original = text.textContent;
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText('ezequiel140901@gmail.com');
+      text.textContent = '¡Copiado!';
+      btn.classList.add('border-gold', 'text-gold');
+      setTimeout(() => {
+        text.textContent = original;
+        btn.classList.remove('border-gold', 'text-gold');
+      }, 2000);
+    });
+  }
+
+  setupFooterCopy();
+  document.addEventListener('astro:after-swap', setupFooterCopy);
+</script>

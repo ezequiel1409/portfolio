@@ -1,9 +1,18 @@
 ---
-import { SOCIAL } from '../data/portfolio.data';
+import { SOCIAL, getPortfolioData, type Locale } from '../data/portfolio.data';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+const data = getPortfolioData(locale);
+const { hero: t } = data.ui;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section
-  class="min-h-[92vh] flex flex-col justify-center px-6 py-24 relative overflow-hidden"
+  class="min-h-[92vh] flex flex-col justify-center px-6 py-20 relative overflow-hidden"
   aria-labelledby="hero-heading"
 >
   <!-- Grid de fondo — sutil, no decorativo -->
@@ -17,21 +26,54 @@ import { SOCIAL } from '../data/portfolio.data';
 
     <!-- Status line -->
     <div class="status-live mb-8 animate-fade-up" style="animation-delay: 0ms; animation-fill-mode: both;">
-      IBM · Banco Supervielle · COMEX
+      {t.badge}
     </div>
 
-    <!-- Terminal prompt — firma visual del portfolio.
-         CSS puro: sin JavaScript, sin dependencias, respeta reduced-motion. -->
+    <!-- Terminal interactiva -->
     <div
-      class="font-display text-ink-3 text-sm mb-6 flex items-center gap-2 animate-fade-up"
+      class="max-w-xl mb-8 border border-rim rounded-md bg-surface/90 backdrop-blur overflow-hidden animate-fade-up font-mono text-xs"
       style="animation-delay: 100ms; animation-fill-mode: both;"
-      aria-hidden="true"
     >
-      <span class="text-gold select-none">$</span>
-      <span class="overflow-hidden whitespace-nowrap hero-typing">
-        whoami
-      </span>
-      <span class="w-px h-4 bg-gold animate-blink inline-block"></span>
+      <!-- Terminal header -->
+      <div class="px-3.5 py-2 bg-surface-2 border-b border-rim flex items-center justify-between select-none">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block"></span>
+          <span class="text-ink-3 text-2xs ml-2">ezequiel@cloud:~ (interactive)</span>
+        </div>
+        <span class="text-2xs text-ink-3">bash</span>
+      </div>
+
+      <!-- Terminal content -->
+      <div class="p-3.5 flex flex-col gap-2 max-h-48 overflow-y-auto" id="hero-term-output">
+        <div class="text-ink-2">
+          <span class="text-gold select-none">$ </span>
+          <span class="text-ink font-medium">whoami</span>
+          <p class="text-ink-3 mt-1 pl-3 border-l border-rim">
+            Ezequiel Gonzalez — Full Stack Developer (Backend &amp; Cloud Focus)
+          </p>
+        </div>
+        <div class="text-ink-3 text-2xs">
+          {locale === 'en' ? "Tip: Try typing 'help', 'stack', 'contact', 'cv' or 'clear'" : "Tip: Probá escribir 'help', 'stack', 'contact', 'cv' o 'clear'"}
+        </div>
+      </div>
+
+      <!-- Terminal input -->
+      <form id="hero-term-form" class="px-3.5 py-2 bg-surface-2/40 border-t border-rim flex items-center gap-2">
+        <span class="text-gold select-none">$</span>
+        <input
+          id="hero-term-input"
+          type="text"
+          placeholder={locale === 'en' ? 'type command...' : 'escribí un comando...'}
+          class="bg-transparent text-ink placeholder:text-ink-3 text-xs w-full focus:outline-none font-mono"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="submit" class="text-ink-3 hover:text-gold text-2xs px-1.5 py-0.5 border border-rim rounded">
+          ↵
+        </button>
+      </form>
     </div>
 
     <!-- Headline -->
@@ -40,8 +82,8 @@ import { SOCIAL } from '../data/portfolio.data';
       class="font-display text-5xl sm:text-6xl md:text-7xl font-medium text-ink tracking-tightest leading-none mb-6 animate-fade-up"
       style="animation-delay: 200ms; animation-fill-mode: both;"
     >
-      Full Stack<br />
-      <span class="text-gold">Developer.</span>
+      {t.title1}<br />
+      <span class="text-gold">{t.title2}</span>
     </h1>
 
     <!-- Subtítulo -->
@@ -49,37 +91,54 @@ import { SOCIAL } from '../data/portfolio.data';
       class="max-w-xl text-lg text-ink-2 leading-relaxed mb-10 animate-fade-up"
       style="animation-delay: 300ms; animation-fill-mode: both;"
     >
-      Construyo sistemas que se mantienen en pie cuando importa.
-      Microservicios event-driven, observabilidad end-to-end, y arquitectura
-      que escala sin degradación. 4+ años en sistemas financieros de alta disponibilidad.
+      {t.subtitle}
     </p>
 
     <!-- CTAs -->
     <div
-      class="flex flex-wrap gap-4 animate-fade-up"
+      class="flex flex-wrap items-center gap-3.5 animate-fade-up"
       style="animation-delay: 400ms; animation-fill-mode: both;"
     >
+      <!-- Ver experiencia -->
       <a href="#experience" class="btn-primary">
-        Ver experiencia
+        {t.ctaExperience}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <line x1="12" y1="5" x2="12" y2="19"/>
           <polyline points="19 12 12 19 5 12"/>
         </svg>
       </a>
+
+      <!-- Descargar CV -->
       <a
-        href={SOCIAL.github}
+        href={`${baseUrl}/cv-ezequiel-gonzalez.pdf`}
         target="_blank"
         rel="noopener noreferrer"
         class="btn-ghost"
-        aria-label="Ver proyectos en GitHub"
+        aria-label={t.ctaCv}
       >
-        GitHub
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
+        {t.ctaCv}
       </a>
+
+      <!-- Copiar Email -->
+      <button
+        id="btn-copy-email"
+        type="button"
+        class="btn-ghost cursor-pointer"
+        aria-label={t.copyEmail}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" id="copy-email-icon">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        <span id="copy-email-text">{t.copyEmail}</span>
+      </button>
+
+      <!-- LinkedIn -->
       <a
         href={SOCIAL.linkedin}
         target="_blank"
@@ -94,6 +153,22 @@ import { SOCIAL } from '../data/portfolio.data';
           <line x1="10" y1="14" x2="21" y2="3"/>
         </svg>
       </a>
+
+      <!-- GitHub -->
+      <a
+        href={SOCIAL.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost"
+        aria-label="Ver proyectos en GitHub"
+      >
+        GitHub
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
     </div>
 
     <!-- Métricas rápidas -->
@@ -101,12 +176,7 @@ import { SOCIAL } from '../data/portfolio.data';
       class="flex flex-wrap gap-8 mt-16 pt-8 border-t border-rim animate-fade-up"
       style="animation-delay: 500ms; animation-fill-mode: both;"
     >
-      {[
-        { value: '4+', label: 'años experiencia' },
-        { value: '3', label: 'industrias (banking, gov, enterprise)' },
-        { value: 'Event-Driven', label: 'arquitectura en producción' },
-        { value: 'AWS', label: 'cloud primario' },
-      ].map(({ value, label }) => (
+      {t.metrics.map(({ value, label }) => (
         <div>
           <p class="font-display text-xl text-gold font-medium leading-none">{value}</p>
           <p class="font-mono text-2xs text-ink-3 mt-1">{label}</p>
@@ -117,17 +187,71 @@ import { SOCIAL } from '../data/portfolio.data';
   </div>
 </section>
 
-<style>
-  /* Animación de escritura — CSS puro, sin JS */
-  .hero-typing {
-    animation: type-in 1.2s steps(7, end) 0.3s both;
-    max-width: 7ch;
+<script>
+  function setupHeroInteractive() {
+    // 1. Botón copiar email
+    const copyBtn = document.getElementById('btn-copy-email');
+    const copyText = document.getElementById('copy-email-text');
+    if (copyBtn && copyText) {
+      const originalText = copyText.textContent;
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('ezequiel140901@gmail.com');
+        copyText.textContent = copyText.getAttribute('data-copied') || '¡Copiado!';
+        copyBtn.classList.add('border-gold', 'text-gold');
+        setTimeout(() => {
+          copyText.textContent = originalText;
+          copyBtn.classList.remove('border-gold', 'text-gold');
+        }, 2000);
+      });
+    }
+
+    // 2. Terminal interactiva
+    const form = document.getElementById('hero-term-form');
+    const input = document.getElementById('hero-term-input') as HTMLInputElement;
+    const output = document.getElementById('hero-term-output');
+
+    if (!form || !input || !output) return;
+
+    const commands: Record<string, string> = {
+      help: 'Comandos disponibles: whoami, stack, experience, projects, contact, cv, clear, sudo',
+      whoami: 'Ezequiel Gonzalez — Full Stack Developer con foco en Backend, Cloud & Microservicios Event-Driven.',
+      stack: 'Backend: .NET 6/C#, Node.js | Cloud: AWS (ECS, Lambda, SQS, SNS) | Broker: Kafka | Telemetría: Dynatrace, Grafana',
+      experience: 'IBM (Banco Supervielle COMEX) -> Tecnosoftware (BCRA) -> Ministerio de Trabajo.',
+      projects: 'career-os (Live), Event-Driven Architecture (In-Progress), Observability Stack (Planned), Grupo Mezzo (Live)',
+      contact: 'Email: ezequiel140901@gmail.com | LinkedIn: /in/ezequiel-gonzalez14',
+      cv: 'Abriendo / Descargando CV...',
+      sudo: 'Permission denied: Nice try! 😉',
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value.trim().toLowerCase();
+      if (!val) return;
+
+      if (val === 'clear') {
+        output.innerHTML = '';
+        input.value = '';
+        return;
+      }
+
+      if (val === 'cv') {
+        window.open('/portfolio/cv-ezequiel-gonzalez.pdf', '_blank');
+      }
+
+      const res = commands[val] || `Comando no reconocido: '${val}'. Escribí 'help' para ver la lista.`;
+
+      const block = document.createElement('div');
+      block.className = 'text-ink-2 mt-1';
+      block.innerHTML = `
+        <div><span class="text-gold select-none">$ </span><span class="text-ink font-medium">${val}</span></div>
+        <p class="text-ink-3 mt-0.5 pl-3 border-l border-rim">${res}</p>
+      `;
+      output.appendChild(block);
+      output.scrollTop = output.scrollHeight;
+      input.value = '';
+    });
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-typing {
-      animation: none;
-      max-width: none;
-    }
-  }
-</style>
+  setupHeroInteractive();
+  document.addEventListener('astro:after-swap', setupHeroInteractive);
+</script>
