@@ -8,12 +8,13 @@ interface Props {
 const { locale = 'es' } = Astro.props;
 const data = getPortfolioData(locale);
 const { letter: t } = data.ui;
+const isEn = locale === 'en';
 ---
 
 <section id="letter" class="section-rule" aria-labelledby="letter-heading">
   <div class="wrap">
     
-    <div class="relative rounded-lg border border-rim bg-surface p-8 sm:p-12 overflow-hidden shadow-sm">
+    <div class="relative rounded-lg border border-rim bg-surface p-6 sm:p-10 md:p-12 overflow-hidden shadow-sm">
       <!-- Glow sutil de acento celeste -->
       <div
         class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-gold/10 blur-3xl pointer-events-none"
@@ -22,7 +23,7 @@ const { letter: t } = data.ui;
 
       <!-- Header de la sección -->
       <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-rim">
-        <div class="max-w-3xl">
+        <div class="max-w-2xl">
           <span class="font-mono text-2xs uppercase tracking-widest text-gold block mb-2">
             {t.eyebrow}
           </span>
@@ -32,106 +33,268 @@ const { letter: t } = data.ui;
         </div>
         <div class="flex items-center gap-2 font-mono text-xs text-ink-3 shrink-0">
           <span class="w-2 h-2 rounded-full bg-live animate-pulse"></span>
-          <span>{locale === 'en' ? 'Maker Mindset · High Ownership' : 'Mentalidad de Hacedor · Alto Ownership'}</span>
+          <span>{isEn ? 'Choose your perspective:' : 'Elegí tu perspectiva:'}</span>
         </div>
       </div>
 
-      <!-- Cuerpo de la carta: Filosofía de producto y hambre de impacto -->
-      <div class="space-y-4 text-ink-2 text-sm sm:text-base leading-relaxed max-w-3xl mb-10">
-        <p class="text-ink font-medium text-base sm:text-lg">
-          {t.p1}
-        </p>
-        <p>
-          {t.p2}
-        </p>
-        <p>
-          {t.p3}
-        </p>
+      <!-- Selector de Pestañas / Tabs -->
+      <div
+        class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-1.5 bg-surface-2 rounded-lg border border-rim mb-10"
+        role="tablist"
+        aria-label={isEn ? 'Profile views' : 'Vistas de perfil'}
+      >
+        <button
+          id="tab-btn-team"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="tab-panel-team"
+          class="flex-1 px-4 py-3 rounded-md text-left transition-all border border-transparent bg-surface text-ink shadow-sm border-gold/30 flex items-center justify-between gap-3 cursor-pointer group"
+        >
+          <div>
+            <span class="font-display text-sm font-medium block text-ink group-hover:text-gold transition-colors">
+              🏢 {t.tabTeamLabel}
+            </span>
+            <span class="text-xs text-ink-3 block mt-0.5 font-mono">
+              {t.tabTeamSubtitle}
+            </span>
+          </div>
+          <span class="w-2 h-2 rounded-full bg-gold shrink-0 indicator-dot"></span>
+        </button>
+
+        <button
+          id="tab-btn-business"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="tab-panel-business"
+          class="flex-1 px-4 py-3 rounded-md text-left transition-all border border-transparent text-ink-2 hover:text-ink hover:bg-surface/50 flex items-center justify-between gap-3 cursor-pointer group"
+        >
+          <div>
+            <span class="font-display text-sm font-medium block text-ink-2 group-hover:text-gold transition-colors">
+              💼 {t.tabBusinessLabel}
+            </span>
+            <span class="text-xs text-ink-3 block mt-0.5 font-mono">
+              {t.tabBusinessSubtitle}
+            </span>
+          </div>
+          <span class="w-2 h-2 rounded-full bg-transparent shrink-0 indicator-dot"></span>
+        </button>
       </div>
 
-      <!-- Hitos técnicos y logros cuantificables -->
-      <div class="mt-8 pt-8 border-t border-rim">
-        <div class="flex items-center justify-between gap-4 mb-6">
-          <h3 class="font-display text-base text-ink font-medium">
-            {t.metricsTitle}
+      <!-- ============================================================
+           PANEL 1: Para Equipos & Empresas Tech (Ingeniería & Hitos)
+           ============================================================ -->
+      <div
+        id="tab-panel-team"
+        role="tabpanel"
+        aria-labelledby="tab-btn-team"
+        class="tab-content transition-opacity duration-200"
+      >
+        <!-- Narrativa para CTOs / Leads -->
+        <div class="space-y-4 text-ink-2 text-sm sm:text-base leading-relaxed max-w-3xl mb-10">
+          <p class="text-ink font-medium text-base sm:text-lg">
+            {t.team.p1}
+          </p>
+          <p>
+            {t.team.p2}
+          </p>
+          <p>
+            {t.team.p3}
+          </p>
+        </div>
+
+        <!-- Hitos técnicos y logros cuantificables -->
+        <div class="mt-8 pt-8 border-t border-rim">
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <h3 class="font-display text-base text-ink font-medium">
+              {t.team.metricsTitle}
+            </h3>
+            <span class="font-mono text-2xs text-gold uppercase tracking-wider hidden sm:inline">
+              {isEn ? 'Quantified Milestones' : 'Impacto Comprobable'}
+            </span>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {t.team.metrics.map((m) => (
+              <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/50 transition-colors">
+                <div>
+                  <p class="font-display text-2xl text-gold font-medium tracking-tight mb-1">
+                    {m.metric}
+                  </p>
+                  <p class="font-mono text-xs text-ink font-medium mb-1.5">
+                    {m.label}
+                  </p>
+                  <p class="text-xs text-ink-3 leading-relaxed">
+                    {m.context}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Compromisos / Pilares de trabajo -->
+        <div class="mt-10 pt-8 border-t border-rim">
+          <h3 class="font-display text-base text-ink font-medium mb-6">
+            {t.team.commitmentsTitle}
           </h3>
-          <span class="font-mono text-2xs text-gold uppercase tracking-wider hidden sm:inline">
-            {locale === 'en' ? 'Quantified Impact' : 'Impacto Comprobable'}
-          </span>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            {t.team.commitments.map((c) => (
+              <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/40 transition-colors">
+                <div>
+                  <p class="font-display text-sm text-ink font-medium mb-1.5 flex items-center gap-2">
+                    <span class="text-gold font-mono">0{c.index}.</span>
+                    {c.title}
+                  </p>
+                  <p class="text-xs text-ink-3 leading-relaxed">
+                    {c.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {t.metrics.map((m) => (
-            <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/50 transition-colors">
-              <div>
-                <p class="font-display text-2xl text-gold font-medium tracking-tight mb-1">
-                  {m.metric}
-                </p>
-                <p class="font-mono text-xs text-ink font-medium mb-1.5">
-                  {m.label}
-                </p>
-                <p class="text-xs text-ink-3 leading-relaxed">
-                  {m.context}
-                </p>
-              </div>
-            </div>
-          ))}
+        <!-- Cierre y Firma Panel 1 -->
+        <div class="mt-10 pt-6 border-t border-rim flex flex-wrap items-center justify-between gap-6">
+          <div>
+            <p class="text-sm text-ink font-display font-medium">
+              {t.signatureName}
+            </p>
+            <p class="text-xs font-mono text-gold mt-0.5">
+              {t.signatureRole}
+            </p>
+            <p class="text-xs text-ink-3 mt-1 max-w-xl">
+              {t.team.closing}
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <a href="#contact" class="btn-primary text-xs py-2 px-4">
+              {t.team.cta}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a
+              href={SOCIAL.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-ghost text-xs py-2 px-3"
+            >
+              LinkedIn ↗
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Compromisos clave / Pilares de trabajo -->
-      <div class="mt-10 pt-8 border-t border-rim">
-        <h3 class="font-display text-base text-ink font-medium mb-6">
-          {t.commitmentsTitle}
-        </h3>
+      <!-- ============================================================
+           PANEL 2: Para Negocios, Pymes & Clientes Directos (Cero Tecnicismos)
+           ============================================================ -->
+      <div
+        id="tab-panel-business"
+        role="tabpanel"
+        aria-labelledby="tab-btn-business"
+        class="tab-content hidden transition-opacity duration-200"
+      >
+        <!-- Narrativa para dueños de negocio / ferreterías / comercios -->
+        <div class="space-y-4 text-ink-2 text-sm sm:text-base leading-relaxed max-w-3xl mb-10">
+          <p class="text-ink font-medium text-base sm:text-lg">
+            {t.business.p1}
+          </p>
+          <p>
+            {t.business.p2}
+          </p>
+          <p>
+            {t.business.p3}
+          </p>
+        </div>
 
-        <div class="grid sm:grid-cols-2 gap-4">
-          {t.commitments.map((c) => (
-            <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/40 transition-colors">
-              <div>
-                <p class="font-display text-sm text-ink font-medium mb-1.5 flex items-center gap-2">
-                  <span class="text-gold font-mono">0{c.index}.</span>
-                  {c.title}
-                </p>
-                <p class="text-xs text-ink-3 leading-relaxed">
-                  {c.body}
-                </p>
+        <!-- Soluciones prácticas de negocio -->
+        <div class="mt-8 pt-8 border-t border-rim">
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <h3 class="font-display text-base text-ink font-medium">
+              {t.business.solutionsTitle}
+            </h3>
+            <span class="font-mono text-2xs text-gold uppercase tracking-wider hidden sm:inline">
+              {isEn ? 'Direct Business Value' : 'Resultados Concretos'}
+            </span>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            {t.business.solutions.map((s) => (
+              <div class="p-5 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/50 transition-colors">
+                <div>
+                  <div class="flex items-center gap-2.5 mb-2">
+                    <span class="text-xl select-none" aria-hidden="true">{s.icon}</span>
+                    <h4 class="font-display text-base text-ink font-medium">
+                      {s.title}
+                    </h4>
+                  </div>
+                  <p class="text-xs sm:text-sm text-ink-2 leading-relaxed">
+                    {s.body}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- Cierre y Firma -->
-      <div class="mt-10 pt-6 border-t border-rim flex flex-wrap items-center justify-between gap-6">
-        <div>
-          <p class="text-sm text-ink font-display font-medium">
-            {t.signatureName}
-          </p>
-          <p class="text-xs font-mono text-gold mt-0.5">
-            {t.signatureRole}
-          </p>
-          <p class="text-xs text-ink-3 mt-1 max-w-xl">
-            {t.closing}
-          </p>
+            ))}
+          </div>
         </div>
 
-        <div class="flex items-center gap-3">
-          <a href="#contact" class="btn-primary text-xs py-2 px-4">
-            {locale === 'en' ? "Let's talk about your team or project" : 'Charlemos de tu equipo o proyecto'}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <a
-            href={SOCIAL.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-ghost text-xs py-2 px-3"
-          >
-            LinkedIn ↗
-          </a>
+        <!-- Beneficios de trabajar juntos -->
+        <div class="mt-10 pt-8 border-t border-rim">
+          <h3 class="font-display text-base text-ink font-medium mb-6">
+            {t.business.benefitsTitle}
+          </h3>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            {t.business.benefits.map((b) => (
+              <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/40 transition-colors">
+                <div>
+                  <p class="font-display text-sm text-ink font-medium mb-1.5 flex items-center gap-2">
+                    <span class="text-gold font-mono">0{b.index}.</span>
+                    {b.title}
+                  </p>
+                  <p class="text-xs text-ink-3 leading-relaxed">
+                    {b.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Cierre y Firma Panel 2 -->
+        <div class="mt-10 pt-6 border-t border-rim flex flex-wrap items-center justify-between gap-6">
+          <div>
+            <p class="text-sm text-ink font-display font-medium">
+              {t.signatureName}
+            </p>
+            <p class="text-xs font-mono text-gold mt-0.5">
+              {isEn ? 'Software & Business Digitalization Consultant' : 'Desarrollador & Consultor de Digitalización'}
+            </p>
+            <p class="text-xs text-ink-3 mt-1 max-w-xl">
+              {t.business.closing}
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <a href="#contact" class="btn-primary text-xs py-2 px-4">
+              {t.business.cta}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a
+              href={`mailto:${SOCIAL.email}?subject=${encodeURIComponent(isEn ? 'Inquiry for my business' : 'Consulta por digitalización para mi negocio')}`}
+              class="btn-ghost text-xs py-2 px-3"
+            >
+              {isEn ? 'Direct Email ✉' : 'Email directo ✉'}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -139,3 +302,56 @@ const { letter: t } = data.ui;
 
   </div>
 </section>
+
+<script>
+  function setupLetterTabs() {
+    const btnTeam = document.getElementById('tab-btn-team');
+    const btnBusiness = document.getElementById('tab-btn-business');
+    const panelTeam = document.getElementById('tab-panel-team');
+    const panelBusiness = document.getElementById('tab-panel-business');
+
+    if (!btnTeam || !btnBusiness || !panelTeam || !panelBusiness) return;
+
+    function activateTeam() {
+      btnTeam?.setAttribute('aria-selected', 'true');
+      btnBusiness?.setAttribute('aria-selected', 'false');
+
+      btnTeam?.classList.add('bg-surface', 'text-ink', 'shadow-sm', 'border-gold/30');
+      btnTeam?.classList.remove('text-ink-2', 'bg-transparent', 'border-transparent');
+      btnBusiness?.classList.remove('bg-surface', 'text-ink', 'shadow-sm', 'border-gold/30');
+      btnBusiness?.classList.add('text-ink-2', 'bg-transparent', 'border-transparent');
+
+      const dotTeam = btnTeam?.querySelector('.indicator-dot');
+      const dotBiz = btnBusiness?.querySelector('.indicator-dot');
+      if (dotTeam) dotTeam.className = 'w-2 h-2 rounded-full bg-gold shrink-0 indicator-dot';
+      if (dotBiz) dotBiz.className = 'w-2 h-2 rounded-full bg-transparent shrink-0 indicator-dot';
+
+      panelTeam?.classList.remove('hidden');
+      panelBusiness?.classList.add('hidden');
+    }
+
+    function activateBusiness() {
+      btnBusiness?.setAttribute('aria-selected', 'true');
+      btnTeam?.setAttribute('aria-selected', 'false');
+
+      btnBusiness?.classList.add('bg-surface', 'text-ink', 'shadow-sm', 'border-gold/30');
+      btnBusiness?.classList.remove('text-ink-2', 'bg-transparent', 'border-transparent');
+      btnTeam?.classList.remove('bg-surface', 'text-ink', 'shadow-sm', 'border-gold/30');
+      btnTeam?.classList.add('text-ink-2', 'bg-transparent', 'border-transparent');
+
+      const dotTeam = btnTeam?.querySelector('.indicator-dot');
+      const dotBiz = btnBusiness?.querySelector('.indicator-dot');
+      if (dotBiz) dotBiz.className = 'w-2 h-2 rounded-full bg-gold shrink-0 indicator-dot';
+      if (dotTeam) dotTeam.className = 'w-2 h-2 rounded-full bg-transparent shrink-0 indicator-dot';
+
+      panelBusiness?.classList.remove('hidden');
+      panelTeam?.classList.add('hidden');
+    }
+
+    btnTeam.addEventListener('click', activateTeam);
+    btnBusiness.addEventListener('click', activateBusiness);
+  }
+
+  setupLetterTabs();
+  document.addEventListener('astro:after-swap', setupLetterTabs);
+</script>

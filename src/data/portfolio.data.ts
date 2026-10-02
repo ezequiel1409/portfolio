@@ -77,22 +77,48 @@ export interface UiTranslations {
   readonly letter: {
     readonly eyebrow: string;
     readonly heading: string;
-    readonly p1: string;
-    readonly p2: string;
-    readonly p3: string;
-    readonly metricsTitle: string;
-    readonly metrics: readonly {
-      readonly metric: string;
-      readonly label: string;
-      readonly context: string;
-    }[];
-    readonly commitmentsTitle: string;
-    readonly commitments: readonly {
-      readonly index: number;
-      readonly title: string;
-      readonly body: string;
-    }[];
-    readonly closing: string;
+    readonly tabTeamLabel: string;
+    readonly tabTeamSubtitle: string;
+    readonly tabBusinessLabel: string;
+    readonly tabBusinessSubtitle: string;
+    readonly team: {
+      readonly p1: string;
+      readonly p2: string;
+      readonly p3: string;
+      readonly metricsTitle: string;
+      readonly metrics: readonly {
+        readonly metric: string;
+        readonly label: string;
+        readonly context: string;
+      }[];
+      readonly commitmentsTitle: string;
+      readonly commitments: readonly {
+        readonly index: number;
+        readonly title: string;
+        readonly body: string;
+      }[];
+      readonly closing: string;
+      readonly cta: string;
+    };
+    readonly business: {
+      readonly p1: string;
+      readonly p2: string;
+      readonly p3: string;
+      readonly solutionsTitle: string;
+      readonly solutions: readonly {
+        readonly icon: string;
+        readonly title: string;
+        readonly body: string;
+      }[];
+      readonly benefitsTitle: string;
+      readonly benefits: readonly {
+        readonly index: number;
+        readonly title: string;
+        readonly body: string;
+      }[];
+      readonly closing: string;
+      readonly cta: string;
+    };
     readonly signatureName: string;
     readonly signatureRole: string;
   };
@@ -354,60 +380,120 @@ const DATA_ES = {
       ],
     },
     letter: {
-      eyebrow: 'Sobre mí · Mentalidad de Producto & Ownership',
-      heading: 'Hacer que las cosas pasen: detectar mejoras, adueñarse del problema y construir productos que enamoren',
-      p1: 'Me apasiona la ingeniería de software como herramienta para construir productos extraordinarios. No entiendo el backend como un conjunto de tablas o endpoints aislados, sino como el motor silencioso que hace que los usuarios y clientes se enamoren del producto: respuestas instantáneas, estabilidad sin sorpresas y flujos que simplemente funcionan.',
-      p2: 'Tengo una mentalidad proactiva, curiosa y con un fuerte hambre de gloria: busco constantemente detectar oportunidades de mejora en el código, en la arquitectura y en los procesos antes de que se conviertan en cuellos de botella. Trabajo con autonomía creciente para destrabar problemas técnicos complejos y me motiva escalar mi impacto en entornos de alta demanda.',
-      p3: 'Valoro la excelencia técnica porque entiendo que escribir código limpio, testeado y modular no es un capricho teórico: es el primer paso indispensable para mover la aguja del negocio de forma medible y sostenible.',
-      metricsTitle: 'Hitos técnicos y logros cuantificables en producción:',
-      metrics: [
-        {
-          metric: '-65% Latencia p99',
-          label: 'Optimización en COMEX',
-          context: 'Re-arquitectura asíncrona con colas SQS y Kafka sosteniendo picos de alta demanda en banca (IBM / Supervielle).',
-        },
-        {
-          metric: '100% Continuidad',
-          label: 'Migración Institucional',
-          context: 'Transición integral de plataforma para +1.500 usuarios diarios sin ningún corte de servicio (Sector Público).',
-        },
-        {
-          metric: '0 Errores Manuales',
-          label: 'Automatización Backend',
-          context: 'Desacoplamiento de procesos y validaciones regulatorias automáticas para el Banco Central (BCRA).',
-        },
-        {
-          metric: 'Ownership Total',
-          label: 'Hacedor de Punta a Punta',
-          context: 'Proyectos propios (career-os), adopción de IA agéntica (Antigravity, Claude Code) y entrega en tiempo y forma.',
-        },
-      ],
-      commitmentsTitle: 'Cómo trabajo y qué valor aporto a tu equipo:',
-      commitments: [
-        {
-          index: 1,
-          title: 'Ownership de punta a punta',
-          body: 'Me hago dueño de las tareas desde la definición hasta la puesta en producción. Pregunto lo necesario para destrabarme rápido, colaboro con el equipo y entrego soluciones completas en tiempo y forma.',
-        },
-        {
-          index: 2,
-          title: 'Mentalidad de hacedor & curiosidad continua',
-          body: 'No me quedo esperando instrucciones pasivamente: construyo proyectos propios, experimento con arquitecturas modernas e integro herramientas de IA de vanguardia para acelerar el desarrollo con criterio.',
-        },
-        {
-          index: 3,
-          title: 'Detección proactiva de mejoras',
-          body: 'Miro el producto con ojos de dueño: detecto cuellos de botella en bases de datos, propongo optimizaciones antes de que el usuario sufra demoras y convierto problemas complejos en flujos limpios.',
-        },
-        {
-          index: 4,
-          title: 'Excelencia que mueve la aguja del negocio',
-          body: 'Código limpio, principios SOLID y tests sólidos no son vanidad técnica: son la garantía de que el producto puede evolucionar a gran velocidad sin romperse a cada paso.',
-        },
-      ],
-      closing: 'Disponible para proyectos puntuales, consultoría backend y roles en equipos ambiciosos que valoren el compromiso y los resultados.',
+      eyebrow: 'Sobre mí · Dos Perspectivas',
+      heading: 'Hacer que las cosas pasen: software con sentido común para empresas y negocios',
+      tabTeamLabel: 'Para Equipos & Empresas Tech',
+      tabTeamSubtitle: 'Líderes técnicos, CTOs y reclutadores que buscan talento con autonomía y ownership',
+      tabBusinessLabel: 'Para Negocios & Clientes Directos',
+      tabBusinessSubtitle: 'Comercios, pymes o profesionales que quieren digitalizarse sin palabras difíciles',
+      team: {
+        p1: 'Me apasiona la ingeniería de software como herramienta para construir productos extraordinarios. No entiendo el backend como un conjunto de tablas o endpoints aislados, sino como el motor silencioso que hace que los usuarios y clientes se enamoren del producto: respuestas instantáneas, estabilidad sin sorpresas y flujos que simplemente funcionan.',
+        p2: 'Tengo una mentalidad proactiva, curiosa y con un fuerte hambre de gloria: busco constantemente detectar oportunidades de mejora en el código, en la arquitectura y en los procesos antes de que se conviertan en cuellos de botella. Trabajo con autonomía creciente para destrabar problemas técnicos complejos y me motiva escalar mi impacto en entornos de alta demanda.',
+        p3: 'Valoro la excelencia técnica porque entiendo que escribir código limpio, testeado y modular no es un capricho teórico: es el primer paso indispensable para mover la aguja del negocio de forma medible y sostenible.',
+        metricsTitle: 'Hitos técnicos y logros cuantificables en producción:',
+        metrics: [
+          {
+            metric: '-65% Latencia p99',
+            label: 'Optimización en COMEX',
+            context: 'Re-arquitectura asíncrona con colas SQS y Kafka sosteniendo picos de alta demanda en banca (IBM / Supervielle).',
+          },
+          {
+            metric: '100% Continuidad',
+            label: 'Migración Institucional',
+            context: 'Transición integral de plataforma para +1.500 usuarios diarios sin ningún corte de servicio (Sector Público).',
+          },
+          {
+            metric: '0 Errores Manuales',
+            label: 'Automatización Backend',
+            context: 'Desacoplamiento de procesos y validaciones regulatorias automáticas para el Banco Central (BCRA).',
+          },
+          {
+            metric: 'Ownership Total',
+            label: 'Hacedor de Punta a Punta',
+            context: 'Proyectos propios (career-os, workspace MCP), adopción de IA agéntica y entregas en tiempo y forma.',
+          },
+        ],
+        commitmentsTitle: 'Cómo trabajo y qué valor aporto a tu equipo:',
+        commitments: [
+          {
+            index: 1,
+            title: 'Ownership de punta a punta',
+            body: 'Me hago dueño de las tareas desde la definición hasta la puesta en producción. Pregunto lo necesario para destrabarme rápido, colaboro con el equipo y entrego soluciones completas en tiempo y forma.',
+          },
+          {
+            index: 2,
+            title: 'Mentalidad de hacedor & curiosidad continua',
+            body: 'No me quedo esperando instrucciones pasivamente: construyo proyectos propios, experimento con arquitecturas modernas e integro herramientas de IA de vanguardia (protocolo MCP) para acelerar el desarrollo con criterio.',
+          },
+          {
+            index: 3,
+            title: 'Detección proactiva de mejoras',
+            body: 'Miro el producto con ojos de dueño: detecto cuellos de botella en bases de datos, propongo optimizaciones antes de que el usuario sufra demoras y convierto problemas complejos en flujos limpios.',
+          },
+          {
+            index: 4,
+            title: 'Excelencia que mueve la aguja del negocio',
+            body: 'Código limpio, principios SOLID y tests sólidos no son vanidad técnica: son la garantía de que el producto puede evolucionar a gran velocidad sin romperse a cada paso.',
+          },
+        ],
+        closing: 'Disponible para sumarme a equipos ambiciosos, asumir desafíos técnicos de alta exigencia y aportar valor tangible desde el día uno.',
+        cta: 'Charlemos de tu equipo',
+      },
+      business: {
+        p1: '¿Tenés un comercio, ferretería, pyme o negocio de servicios y querés vender más, ahorrar tiempo o modernizarte sin dolores de cabeza? No te voy a hablar en chino técnico ni complicarte la vida con siglas. Vos sos quien mejor conoce tu negocio; mi trabajo es hacer que la tecnología trabaje para vos, no al revés.',
+        p2: 'Trabajé tanto en grandes entidades como en proyectos para clientes independientes. Mi foco es que cada peso invertido te rinda de inmediato: que tus clientes vean tus productos desde el celular y te pidan por WhatsApp en segundos, que cobrar por Mercado Pago o tarjeta sea automático y que dejes de perder horas pasando datos a mano en papel o planillas de Excel desordenadas.',
+        p3: 'Me encargo de todo el funcionamiento técnico de punta a punta: desde la puesta en marcha hasta el mantenimiento diario, con comunicación directa y humana.',
+        solutionsTitle: 'Soluciones directas para hacer crecer tu negocio:',
+        solutions: [
+          {
+            icon: '🛒',
+            title: 'Catálogos digitales & Pedidos por WhatsApp',
+            body: 'Tus productos visibles 24/7 con fotos, precios y un botón para que el cliente te mande el pedido armado directo a tu WhatsApp con un solo clic.',
+          },
+          {
+            icon: '💳',
+            title: 'Cobros automáticos (Mercado Pago & Tarjetas)',
+            body: 'Cobrá al instante sin complicaciones. Botones de pago, transferencias y tarjetas integradas para no perder ventas y asegurar tu dinero.',
+          },
+          {
+            icon: '📊',
+            title: 'Chau planillas: Control de Stock y Clientes',
+            body: 'Un sistema simple y a medida para controlar mercadería, registrar presupuestos y saber qué reponer en minutos sin dolores de cabeza.',
+          },
+          {
+            icon: '🌐',
+            title: 'Páginas web que dan confianza en Google',
+            body: 'Sitios rápidos y modernos que transmiten seriedad y profesionalismo para que los clientes te elijan a vos antes que a la competencia.',
+          },
+        ],
+        benefitsTitle: 'Por qué trabajar conmigo es tranquilo y sin sorpresas:',
+        benefits: [
+          {
+            index: 1,
+            title: 'Cero palabras difíciles',
+            body: 'Te hablo en tu idioma y con total claridad. Vas a entender exactamente qué estamos haciendo, por qué y cómo beneficia a tus ventas.',
+          },
+          {
+            index: 2,
+            title: 'Atención directa por WhatsApp o llamada',
+            body: 'Hablás directamente conmigo. Sin intermediarios, sin demoras burocráticas y con respuesta rápida ante cualquier consulta o urgencia.',
+          },
+          {
+            index: 3,
+            title: 'Presupuesto claro y cerrado',
+            body: 'Pactamos el trabajo, los plazos y el costo desde el primer día. Sin sorpresas ni gastos ocultos a mitad de camino.',
+          },
+          {
+            index: 4,
+            title: 'A la medida de tu bolsillo',
+            body: 'Empezamos por lo que más impacto te genera hoy para que empiece a rendir rápido, y lo escalamos a medida que tu negocio crece.',
+          },
+        ],
+        closing: 'Contame qué hace tu negocio y qué te gustaría mejorar. Te asesoro sin compromiso y vemos cuál es el camino más simple y económico.',
+        cta: 'Consultar por mi negocio',
+      },
       signatureName: 'Ezequiel Gonzalez',
-      signatureRole: 'Full Stack & Cloud Developer · Product & Backend Engineering',
+      signatureRole: 'Desarrollador Full Stack · Soluciones Digitales & Backend',
     },
     services: {
       eyebrow: 'Soluciones Técnicas',
@@ -686,60 +772,120 @@ const DATA_EN = {
       ],
     },
     letter: {
-      eyebrow: 'About Me · Product Mindset & Ownership',
-      heading: 'Making things happen: spotting improvements, taking ownership, and building products users love',
-      p1: 'I view software engineering as the vehicle for building extraordinary products. I do not see backend systems as disconnected tables or endpoints, but as the silent engine that makes users and customers fall in love with the product: instantaneous response times, unwavering stability, and flows that just work.',
-      p2: 'I have a proactive, curious mindset with a hunger to achieve great things: I constantly spot opportunities for improvement in code, architecture, and developer workflows before they turn into bottlenecks. I work with growing autonomy to unblock complex technical challenges and thrive on scaling my impact in high-demand environments.',
-      p3: 'I pursue technical excellence because writing clean, tested, and modular code is the essential foundation for moving business needles in a measurable, sustainable way.',
-      metricsTitle: 'Quantifiable technical milestones in production:',
-      metrics: [
-        {
-          metric: '-65% p99 Latency',
-          label: 'Fintech Optimization',
-          context: 'Asynchronous re-architecture with Kafka & SQS sustaining peak banking demand (IBM / Supervielle).',
-        },
-        {
-          metric: '100% Continuity',
-          label: 'Institutional Migration',
-          context: 'Full platform transition for 1,500+ daily concurrent users with zero downtime (Public Sector).',
-        },
-        {
-          metric: '0 Manual Errors',
-          label: 'Backend Automation',
-          context: 'Decoupled services and automated regulatory validations for the Central Bank of Argentina (BCRA).',
-        },
-        {
-          metric: 'Full Ownership',
-          label: 'End-to-End Maker',
-          context: 'Personal projects (career-os), early adoption of agentic AI (Antigravity, Claude Code), and on-time delivery.',
-        },
-      ],
-      commitmentsTitle: 'How I work and the value I bring to your team:',
-      commitments: [
-        {
-          index: 1,
-          title: 'End-to-end ownership',
-          body: 'I own tasks from requirements clarification to production deployment. I ask what is necessary to unblock quickly, collaborate with the team, and deliver complete solutions on time.',
-        },
-        {
-          index: 2,
-          title: 'Maker mindset & continuous curiosity',
-          body: 'I do not wait passively for instructions: I build personal projects, explore modern architectures, and leverage cutting-edge AI engineering tools to accelerate delivery with judgment.',
-        },
-        {
-          index: 3,
-          title: 'Proactive detection of improvements',
-          body: 'I look at products through the eyes of an owner: finding database bottlenecks, proposing UX-enhancing backend optimizations, and turning complex problems into clean, robust flows.',
-        },
-        {
-          index: 4,
-          title: 'Excellence that moves business needles',
-          body: 'Clean code, SOLID principles, and comprehensive tests are not ivory-tower theory: they are the guarantee that the product can evolve fast without breaking at every release.',
-        },
-      ],
-      closing: 'Ready to join ambitious engineering teams, tackle high-demand technical challenges, and deliver tangible value from day one.',
+      eyebrow: 'About Me · Two Perspectives',
+      heading: 'Making things happen: pragmatic software for engineering teams and direct businesses',
+      tabTeamLabel: 'For Tech Teams & Companies',
+      tabTeamSubtitle: 'CTOs, Engineering Managers and recruiters looking for talent with autonomy & ownership',
+      tabBusinessLabel: 'For Businesses & Direct Clients',
+      tabBusinessSubtitle: 'SMEs, commerce, or professionals looking to digitize without technical jargon',
+      team: {
+        p1: 'I view software engineering as the vehicle for building extraordinary products. I do not see backend systems as disconnected tables or endpoints, but as the silent engine that makes users and customers fall in love with the product: instantaneous response times, unwavering stability, and flows that just work.',
+        p2: 'I have a proactive, curious mindset with a hunger to achieve great things: I constantly spot opportunities for improvement in code, architecture, and developer workflows before they turn into bottlenecks. I work with growing autonomy to unblock complex technical challenges and thrive on scaling my impact in high-demand environments.',
+        p3: 'I pursue technical excellence because writing clean, tested, and modular code is the essential foundation for moving business needles in a measurable, sustainable way.',
+        metricsTitle: 'Quantifiable technical milestones in production:',
+        metrics: [
+          {
+            metric: '-65% p99 Latency',
+            label: 'Fintech Optimization',
+            context: 'Asynchronous re-architecture with Kafka & SQS sustaining peak banking demand (IBM / Supervielle).',
+          },
+          {
+            metric: '100% Continuity',
+            label: 'Institutional Migration',
+            context: 'Full platform transition for 1,500+ daily concurrent users with zero downtime (Public Sector).',
+          },
+          {
+            metric: '0 Manual Errors',
+            label: 'Backend Automation',
+            context: 'Decoupled services and automated regulatory validations for the Central Bank of Argentina (BCRA).',
+          },
+          {
+            metric: 'Full Ownership',
+            label: 'End-to-End Maker',
+            context: 'Personal projects (career-os, MCP workspace), early adoption of agentic AI, and on-time delivery.',
+          },
+        ],
+        commitmentsTitle: 'How I work and the value I bring to your team:',
+        commitments: [
+          {
+            index: 1,
+            title: 'End-to-end ownership',
+            body: 'I own tasks from requirements clarification to production deployment. I ask what is necessary to unblock quickly, collaborate with the team, and deliver complete solutions on time.',
+          },
+          {
+            index: 2,
+            title: 'Maker mindset & continuous curiosity',
+            body: 'I do not wait passively for instructions: I build personal projects, explore modern architectures, and leverage cutting-edge AI engineering tools (MCP protocol) to accelerate delivery with judgment.',
+          },
+          {
+            index: 3,
+            title: 'Proactive detection of improvements',
+            body: 'I look at products through the eyes of an owner: finding database bottlenecks, proposing UX-enhancing backend optimizations, and turning complex problems into clean, robust flows.',
+          },
+          {
+            index: 4,
+            title: 'Excellence that moves business needles',
+            body: 'Clean code, SOLID principles, and comprehensive tests are not ivory-tower theory: they are the guarantee that the product can evolve fast without breaking at every release.',
+          },
+        ],
+        closing: 'Ready to join ambitious engineering teams, tackle high-demand technical challenges, and deliver tangible value from day one.',
+        cta: "Let's talk about your team",
+      },
+      business: {
+        p1: 'Do you run a business, local store, or SME and want to increase sales, save manual hours, or modernize without tech headaches? I will not speak in technical jargon or overwhelm you with acronyms. You are the expert in your business; my job is to make technology work for you, not against you.',
+        p2: 'I have delivered systems for large institutions and independent businesses alike. My priority is ensuring your investment pays off immediately: giving your customers a mobile catalog where they can order via WhatsApp in seconds, automating card and digital payments, and eliminating hours lost copying data onto messy paper or spreadsheets.',
+        p3: 'I handle all technical operations end-to-end: from initial setup to day-to-day maintenance, with transparent, direct communication.',
+        solutionsTitle: 'Direct solutions to grow your business:',
+        solutions: [
+          {
+            icon: '🛒',
+            title: 'Digital Catalogs & WhatsApp Orders',
+            body: 'Your products visible 24/7 with photos, pricing, and a single click for customers to send pre-assembled orders straight to your WhatsApp.',
+          },
+          {
+            icon: '💳',
+            title: 'Automated Payments (Cards & Digital Wallets)',
+            body: 'Get paid instantly without friction. Integrated payment links and card processing so you never lose a sale.',
+          },
+          {
+            icon: '📊',
+            title: 'Ditch the Spreadsheets: Stock & Order Control',
+            body: 'A simple, tailored system to track merchandise, manage customer quotes, and know what to restock in minutes without stress.',
+          },
+          {
+            icon: '🌐',
+            title: 'Professional Websites that Build Trust on Google',
+            body: 'Fast, modern websites that convey authority and trust so prospective clients choose you over competitors.',
+          },
+        ],
+        benefitsTitle: 'Why working with me is smooth and predictable:',
+        benefits: [
+          {
+            index: 1,
+            title: 'Zero complicated jargon',
+            body: 'I communicate in plain language. You will always understand exactly what we are building, why, and how it drives your sales.',
+          },
+          {
+            index: 2,
+            title: 'Direct WhatsApp or phone support',
+            body: 'You communicate directly with me. No middlemen, no bureaucratic delays, and prompt responses to questions or urgent requests.',
+          },
+          {
+            index: 3,
+            title: 'Transparent, fixed budgets',
+            body: 'We agree on scope, timelines, and costs upfront. No surprise charges or hidden fees down the road.',
+          },
+          {
+            index: 4,
+            title: 'Tailored to your budget',
+            body: 'We start with the highest-impact improvement so you see immediate returns, scaling features as your business grows.',
+          },
+        ],
+        closing: "Tell me about your business and what you'd like to improve. I'll provide straightforward advice and outline the simplest, most cost-effective path forward.",
+        cta: 'Inquire for my business',
+      },
       signatureName: 'Ezequiel Gonzalez',
-      signatureRole: 'Full Stack & Cloud Developer · Product & Backend Engineering',
+      signatureRole: 'Full Stack Developer · Digital Solutions & Backend Engineering',
     },
     services: {
       eyebrow: 'Technical Solutions',
