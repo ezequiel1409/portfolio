@@ -16,28 +16,28 @@ const { letter: t } = data.ui;
     <div class="relative rounded-lg border border-rim bg-surface p-8 sm:p-12 overflow-hidden shadow-sm">
       <!-- Glow sutil de acento celeste -->
       <div
-        class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gold/10 blur-3xl pointer-events-none"
+        class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-gold/10 blur-3xl pointer-events-none"
         aria-hidden="true"
       ></div>
 
-      <!-- Header de la carta -->
+      <!-- Header de la sección -->
       <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-rim">
-        <div>
+        <div class="max-w-3xl">
           <span class="font-mono text-2xs uppercase tracking-widest text-gold block mb-2">
             {t.eyebrow}
           </span>
-          <h2 id="letter-heading" class="font-display text-2xl sm:text-3xl md:text-4xl text-ink tracking-tight font-medium">
+          <h2 id="letter-heading" class="font-display text-2xl sm:text-3xl md:text-4xl text-ink tracking-tight font-medium leading-tight">
             {t.heading}
           </h2>
         </div>
-        <div class="flex items-center gap-2 font-mono text-xs text-ink-3">
+        <div class="flex items-center gap-2 font-mono text-xs text-ink-3 shrink-0">
           <span class="w-2 h-2 rounded-full bg-live animate-pulse"></span>
-          <span>{locale === 'en' ? 'Open & Transparent Commitment' : 'Compromiso Abierto y Transparente'}</span>
+          <span>{locale === 'en' ? 'Maker Mindset · High Ownership' : 'Mentalidad de Hacedor · Alto Ownership'}</span>
         </div>
       </div>
 
-      <!-- Cuerpo de la carta -->
-      <div class="space-y-4 text-ink-2 text-sm sm:text-base leading-relaxed max-w-3xl">
+      <!-- Cuerpo de la carta: Filosofía de producto y hambre de impacto -->
+      <div class="space-y-4 text-ink-2 text-sm sm:text-base leading-relaxed max-w-3xl mb-10">
         <p class="text-ink font-medium text-base sm:text-lg">
           {t.p1}
         </p>
@@ -49,15 +49,45 @@ const { letter: t } = data.ui;
         </p>
       </div>
 
-      <!-- Compromisos clave -->
+      <!-- Hitos técnicos y logros cuantificables -->
       <div class="mt-8 pt-8 border-t border-rim">
+        <div class="flex items-center justify-between gap-4 mb-6">
+          <h3 class="font-display text-base text-ink font-medium">
+            {t.metricsTitle}
+          </h3>
+          <span class="font-mono text-2xs text-gold uppercase tracking-wider hidden sm:inline">
+            {locale === 'en' ? 'Quantified Impact' : 'Impacto Comprobable'}
+          </span>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {t.metrics.map((m) => (
+            <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/50 transition-colors">
+              <div>
+                <p class="font-display text-2xl text-gold font-medium tracking-tight mb-1">
+                  {m.metric}
+                </p>
+                <p class="font-mono text-xs text-ink font-medium mb-1.5">
+                  {m.label}
+                </p>
+                <p class="text-xs text-ink-3 leading-relaxed">
+                  {m.context}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Compromisos clave / Pilares de trabajo -->
+      <div class="mt-10 pt-8 border-t border-rim">
         <h3 class="font-display text-base text-ink font-medium mb-6">
           {t.commitmentsTitle}
         </h3>
 
         <div class="grid sm:grid-cols-2 gap-4">
           {t.commitments.map((c) => (
-            <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between">
+            <div class="p-4 rounded-md bg-surface-2/60 border border-rim/70 flex flex-col justify-between group hover:border-gold/40 transition-colors">
               <div>
                 <p class="font-display text-sm text-ink font-medium mb-1.5 flex items-center gap-2">
                   <span class="text-gold font-mono">0{c.index}.</span>
@@ -81,14 +111,14 @@ const { letter: t } = data.ui;
           <p class="text-xs font-mono text-gold mt-0.5">
             {t.signatureRole}
           </p>
-          <p class="text-xs text-ink-3 mt-1">
+          <p class="text-xs text-ink-3 mt-1 max-w-xl">
             {t.closing}
           </p>
         </div>
 
         <div class="flex items-center gap-3">
           <a href="#contact" class="btn-primary text-xs py-2 px-4">
-            {locale === 'en' ? "Let's talk about your challenge" : 'Charlemos de tu problema'}
+            {locale === 'en' ? "Let's talk about your team or project" : 'Charlemos de tu equipo o proyecto'}
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>

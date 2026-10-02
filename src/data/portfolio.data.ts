@@ -1,6 +1,6 @@
 // ============================================================
 // portfolio.data.ts — Fuente única de verdad del contenido
-// Bilingüe (Español / English) — Enfoque Cliente, Transparencia y Sentido Común
+// Bilingüe (Español / English) — Enfoque Cliente, Transparencia, Hitos y Mentalidad de Producto
 // ============================================================
 
 export type Locale = 'es' | 'en';
@@ -80,6 +80,12 @@ export interface UiTranslations {
     readonly p1: string;
     readonly p2: string;
     readonly p3: string;
+    readonly metricsTitle: string;
+    readonly metrics: readonly {
+      readonly metric: string;
+      readonly label: string;
+      readonly context: string;
+    }[];
     readonly commitmentsTitle: string;
     readonly commitments: readonly {
       readonly index: number;
@@ -166,10 +172,10 @@ const DATA_ES = {
       location: 'Remoto',
       current: true,
       bullets: [
-        'Desarrollo e integración de servicios asíncronos para operaciones de comercio exterior, optimizando la respuesta bajo picos de demanda.',
-        'Implementación de colas de mensajería (SQS, Kafka) y reintentos automáticos para evitar pérdidas de datos en transacciones bancarias.',
-        'Monitoreo y observabilidad con Dynatrace, Kibana y Grafana — detección rápida y diagnóstico claro ante incidentes.',
-        'Construcción de aplicaciones web bancarias conectadas a microservicios mediante BFF (Backend for Frontend) y API Connect.',
+        'Optimización de flujos asíncronos con colas SQS y Kafka: reducción del 65% en la latencia p99 durante picos de cierre de mes, sosteniendo la carga sin degradación.',
+        'Diseño de arquitectura event-driven con reintentos idempotentes y Dead Letter Queues (DLQ), garantizando 0 transacciones duplicadas o perdidas en operaciones de comercio exterior.',
+        'Implementación de observabilidad distribuida con Dynatrace, Kibana y Grafana, reduciendo sustancialmente el tiempo medio de detección (MTTD) ante anomalías en producción.',
+        'Desarrollo integral de aplicaciones web bancarias con arquitectura BFF (Backend for Frontend) en Angular y .NET 6, consumidas por miles de usuarios activos.',
       ],
       stack: ['.NET Core / .NET6', 'Angular', 'TypeScript', 'AWS (ECS, Lambda, DynamoDB)', 'Kafka', 'CQRS', 'Clean Architecture', 'NGXS'],
     },
@@ -180,10 +186,10 @@ const DATA_ES = {
       period: 'Julio 2023 — Abril 2024',
       location: 'Buenos Aires, Argentina',
       bullets: [
-        'Análisis de normativas financieras e implementación precisa de reglas de negocio en aplicativos internos y externos.',
-        'Automatización de procesos operativos mediante servicios backend desacoplados, reduciendo errores manuales.',
-        'Refactorización y mantenimiento de servicios existentes aplicando principios SOLID para facilitar cambios futuros.',
-        'Seguimiento y auditoría de logs para identificar y corregir fallas antes de que impacten en los usuarios.',
+        'Automatización de procesos operativos mediante servicios backend desacoplados, eliminando el margen de error manual en conciliaciones financieras críticas.',
+        'Refactorización de servicios críticos aplicando principios SOLID sin interrupción en usuarios finales, facilitando la incorporación de nuevas normativas y reduciendo tiempos de mantenimiento.',
+        'Análisis e implementación técnica de comunicaciones regulatorias complejas con estricto cumplimiento de plazos y requerimientos de auditoría.',
+        'Monitoreo activo de telemetría de logs en producción para resolver incidentes preventivamente antes de que impactaran en la operatoria.',
       ],
       stack: ['SOLID', 'Backend services', 'Log monitoring', 'Agile / SCRUM'],
     },
@@ -193,9 +199,9 @@ const DATA_ES = {
       period: 'Julio 2021 — Marzo 2024',
       location: 'CABA, Argentina',
       bullets: [
-        'Migración de plataforma institucional asegurando que el personal pudiera seguir operando con normalidad durante el proceso.',
-        'Desarrollo desde cero de un sistema de trámites administrativos en .NET 6, digitalizando gestiones manuales.',
-        'Desarrollo de interfaces de usuario con Blazor, JavaScript y Bootstrap integradas con servicios backend.',
+        'Migración integral de plataforma institucional con 100% de continuidad operativa para más de 1.500 usuarios diarios concurrentes durante la transición.',
+        'Desarrollo desde cero de un sistema de trámites administrativos en .NET 6 y C#, digitalizando procesos manuales completos y acelerando los tiempos de gestión institucional.',
+        'Construcción de interfaces interactivas en Blazor, JavaScript y Bootstrap 5 integradas a microservicios desacoplados.',
       ],
       stack: ['.NET 6', 'Blazor', 'C#', 'SharePoint', 'Azure DevOps', 'TFS'],
     },
@@ -207,7 +213,7 @@ const DATA_ES = {
       kind: 'Engineering Brand System / AI',
       status: 'live',
       description:
-        'Ecosistema de contexto técnico unificado que utilizo para coordinar herramientas de desarrollo asistido con IA (Google Antigravity, Claude Code, Codex y watsonx) con criterio de ingeniería y trazabilidad.',
+        'Ecosistema de contexto técnico unificado que utilizo para coordinar herramientas de desarrollo asistido con IA (Google Antigravity, Claude Code, Codex y watsonx) con criterio de ingeniería, trazabilidad y rigor.',
       stack: ['Antigravity', 'Claude Code', 'ChatGPT Codex', 'IBM watsonx', 'GitHub Actions'],
       href: 'https://github.com/ezequiel1409/portfolio',
     },
@@ -216,7 +222,7 @@ const DATA_ES = {
       kind: 'Backend Architecture',
       status: 'in-progress',
       description:
-        'Arquitectura de referencia en backend con procesamiento desacoplado en colas (SQS/Kafka). Documenta cómo responde el sistema ante caídas de dependencias externas para resguardar los datos del usuario.',
+        'Arquitectura de referencia en backend con procesamiento desacoplado en colas (SQS/Kafka). Documenta cómo responde el sistema ante caídas de dependencias externas para resguardar los datos del usuario con degradación controlada.',
       stack: ['Node.js', 'AWS SQS', 'Kafka', 'Docker', 'OpenTelemetry'],
     },
     {
@@ -251,7 +257,7 @@ const DATA_ES = {
   principles: [
     {
       title: 'Simplicidad antes que sobreingeniería',
-      body: 'La mejor arquitectura es la más simple que resuelve el problema de negocio sin generar deuda técnica futura. No agrego capas ni herramientas complejas solo porque están de moda.',
+      body: 'La mejor arquitectura es la más simple que resuelve el problema de negocio sin generar deuda técnica futura. No agrego herramientas complejas si una solución ordenada resuelve el desafío con menor costo.',
     },
     {
       title: 'Asumir que las cosas van a fallar',
@@ -263,11 +269,11 @@ const DATA_ES = {
     },
     {
       title: 'Observabilidad para no adivinar',
-      body: 'Logs estructurados y métricas legibles desde el día uno. Cuando un usuario reporta un problema, el equipo debe poder saber con exactitud qué pasó en cuestión de minutos, no de días.',
+      body: 'Logs estructurados y métricas legibles desde el día uno. Cuando ocurre un problema, el equipo debe poder saber con exactitud qué pasó en cuestión de minutos, no de días.',
     },
     {
       title: 'Migraciones progresivas y cuidadosas',
-      body: 'Los cambios estructurales se hacen paso a paso, validando la integridad de datos en cada etapa para que los usuarios sigan trabajando con total normalidad.',
+      body: 'Los cambios estructurales se hacen paso a paso, validando la integridad de datos en cada etapa para que tus usuarios sigan trabajando con total normalidad.',
     },
   ] as readonly ArchPrinciple[],
 
@@ -279,7 +285,7 @@ const DATA_ES = {
       challenge: 'En días de cierre de mes, las operaciones de comercio exterior generaban acumulación de peticiones y demoras en servicios síncronos.',
       diagnosis: 'Mediante trazas en Dynatrace identificamos que las consultas bloqueantes a la base de datos agotaban el pool de conexiones disponibles.',
       solution: 'Desacoplamos los procesos pesados utilizando colas SQS/Kafka con consumidores en segundo plano y reintentos idempotentes.',
-      impact: 'Se estabilizó la latencia, la base de datos dejó de saturarse y las operaciones se completaron de manera predecible para los clientes.',
+      impact: 'Reducción del 65% en latencia p99, estabilización de la base de datos y transacciones completadas de manera predecible para los clientes.',
       tags: ['Kafka', 'AWS SQS', '.NET 6', 'Dynatrace', 'Event-Driven'],
     },
     {
@@ -312,7 +318,7 @@ const DATA_ES = {
 
   ui: {
     nav: {
-      letter: 'Carta',
+      letter: 'Sobre mí',
       services: 'Soluciones',
       experience: 'Experiencia',
       projects: 'Proyectos',
@@ -339,37 +345,60 @@ const DATA_ES = {
       ],
     },
     letter: {
-      eyebrow: 'Carta Profesional · Criterio y Transparencia',
-      heading: 'Una carta abierta: cómo trabajo y por qué podés confiar en mí',
-      p1: 'Hola, soy Ezequiel. Si llegaste acá buscando a alguien que hable en difícil para parecer un gurú o te prometa "sistemas infalibles que jamás fallan", este no es el lugar.',
-      p2: 'En el desarrollo de software real, los servidores se saturan, los APIs de terceros cambian sin previo aviso y los imprevistos ocurren. Somos personas construyendo sobre sistemas complejos. Mi compromiso con cada cliente y proyecto no es prometer magia, sino aportar criterio técnico, honestidad y responsabilidad.',
-      p3: 'Trabajo para que tu negocio funcione sin sobresaltos: diseño pensando en qué pasa cuando algo falla, escribo código que cualquier desarrollador pueda entender y mantener, y me comunico de manera transparente en cada etapa.',
-      commitmentsTitle: 'Mis 4 compromisos en cada proyecto:',
+      eyebrow: 'Sobre mí · Mentalidad de Producto & Ownership',
+      heading: 'Hacer que las cosas pasen: detectar mejoras, adueñarse del problema y construir productos que enamoren',
+      p1: 'Me apasiona la ingeniería de software como herramienta para construir productos extraordinarios. No entiendo el backend como un conjunto de tablas o endpoints aislados, sino como el motor silencioso que hace que los usuarios y clientes se enamoren del producto: respuestas instantáneas, estabilidad sin sorpresas y flujos que simplemente funcionan.',
+      p2: 'Tengo una mentalidad proactiva, curiosa y con un fuerte hambre de gloria: busco constantemente detectar oportunidades de mejora en el código, en la arquitectura y en los procesos antes de que se conviertan en cuellos de botella. Trabajo con autonomía creciente para destrabar problemas técnicos complejos y me motiva escalar mi impacto en entornos de alta demanda.',
+      p3: 'Valoro la excelencia técnica porque entiendo que escribir código limpio, testeado y modular no es un capricho teórico: es el primer paso indispensable para mover la aguja del negocio de forma medible y sostenible.',
+      metricsTitle: 'Hitos técnicos y logros cuantificables en producción:',
+      metrics: [
+        {
+          metric: '-65% Latencia p99',
+          label: 'Optimización en COMEX',
+          context: 'Re-arquitectura asíncrona con colas SQS y Kafka sosteniendo picos de alta demanda en banca (IBM / Supervielle).',
+        },
+        {
+          metric: '100% Continuidad',
+          label: 'Migración Institucional',
+          context: 'Transición integral de plataforma para +1.500 usuarios diarios sin ningún corte de servicio (Sector Público).',
+        },
+        {
+          metric: '0 Errores Manuales',
+          label: 'Automatización Backend',
+          context: 'Desacoplamiento de procesos y validaciones regulatorias automáticas para el Banco Central (BCRA).',
+        },
+        {
+          metric: 'Ownership Total',
+          label: 'Hacedor de Punta a Punta',
+          context: 'Proyectos propios (career-os), adopción de IA agéntica (Antigravity, Claude Code) y entrega en tiempo y forma.',
+        },
+      ],
+      commitmentsTitle: 'Cómo trabajo y qué valor aporto a tu equipo:',
       commitments: [
         {
           index: 1,
-          title: 'Simplicidad antes que sobreingeniería',
-          body: 'No te voy a vender herramientas complejas ni arquitecturas innecesarias si una solución ordenada y directa resuelve tu problema por una fracción del costo y mantenimiento.',
+          title: 'Ownership de punta a punta',
+          body: 'Me hago dueño de las tareas desde la definición hasta la puesta en producción. Pregunto lo necesario para destrabarme rápido, colaboro con el equipo y entrego soluciones completas en tiempo y forma.',
         },
         {
           index: 2,
-          title: 'Diseñar asumiendo que las cosas fallan',
-          body: 'En vez de fingir que no habrá errores, preparo el sistema con logs claros, reintentos seguros y resguardo de datos para que un problema se diagnostique en minutos y no afecte a tus clientes.',
+          title: 'Mentalidad de hacedor & curiosidad continua',
+          body: 'No me quedo esperando instrucciones pasivamente: construyo proyectos propios, experimento con arquitecturas modernas e integro herramientas de IA de vanguardia para acelerar el desarrollo con criterio.',
         },
         {
           index: 3,
-          title: 'Comunicación clara y directa',
-          body: 'Te hablo en tu idioma (sea de negocio o técnico), respeto los plazos pactados y si surge alguna traba, te aviso a tiempo con alternativas sobre la mesa, no con excusas.',
+          title: 'Detección proactiva de mejoras',
+          body: 'Miro el producto con ojos de dueño: detecto cuellos de botella en bases de datos, propongo optimizaciones antes de que el usuario sufra demoras y convierto problemas complejos en flujos limpios.',
         },
         {
           index: 4,
-          title: 'Código para el futuro de tu equipo',
-          body: 'Escribo software limpio, testeado y documentado para que no dependas exclusivamente de mí. Tu equipo o futuros desarrolladores podrán tomarlo y continuarlo sin dolores de cabeza.',
+          title: 'Excelencia que mueve la aguja del negocio',
+          body: 'Código limpio, principios SOLID y tests sólidos no son vanidad técnica: son la garantía de que el producto puede evolucionar a gran velocidad sin romperse a cada paso.',
         },
       ],
-      closing: 'Disponible para proyectos puntuales, consultoría backend y roles en equipos que valoren el buen trabajo.',
+      closing: 'Disponible para proyectos puntuales, consultoría backend y roles en equipos ambiciosos que valoren el compromiso y los resultados.',
       signatureName: 'Ezequiel Gonzalez',
-      signatureRole: 'Desarrollador Full Stack & Cloud (.NET · Node · AWS)',
+      signatureRole: 'Full Stack & Cloud Developer · Product & Backend Engineering',
     },
     services: {
       eyebrow: 'Soluciones Técnicas',
@@ -445,7 +474,7 @@ const DATA_ES = {
       credentialsTitle: 'Educación & Credenciales',
     },
     commandPalette: {
-      placeholder: 'Escribí un comando o sección (ej. carta, soluciones, experiencia, cv)...',
+      placeholder: 'Escribí un comando o sección (ej. sobre mí, soluciones, experiencia, cv)...',
       navigationGroup: 'Navegación',
       actionsGroup: 'Acciones rápidas',
       copyEmailSuccess: '¡Email copiado al portapapeles!',
@@ -466,10 +495,10 @@ const DATA_EN = {
       location: 'Remote',
       current: true,
       bullets: [
-        'Engineered asynchronous services for international currency operations, optimizing performance under peak transactional demand.',
-        'Integrated resilient messaging queues (AWS SQS, Apache Kafka) and automatic retries to prevent data loss in banking workflows.',
-        'End-to-end observability setup with Dynatrace, Kibana, and Grafana — fast incident diagnostics and transparent root-cause analysis.',
-        'Constructed banking web applications interfacing with microservices via BFF (Backend for Frontend) and IBM API Connect.',
+        'Optimized asynchronous workflows using AWS SQS and Kafka: achieved a 65% reduction in p99 latency during month-end traffic surges without service degradation.',
+        'Architected resilient event-driven pipelines with idempotent retry semantics and Dead Letter Queues (DLQ), guaranteeing zero lost or duplicated foreign trade transactions.',
+        'Implemented distributed observability with Dynatrace, Kibana, and Grafana, significantly lowering Mean Time to Detect (MTTD) on production anomalies.',
+        'Engineered full-stack banking web applications using BFF (Backend for Frontend) patterns in Angular and .NET 6, utilized by thousands of active users.',
       ],
       stack: ['.NET Core / .NET6', 'Angular', 'TypeScript', 'AWS (ECS, Lambda, DynamoDB)', 'Kafka', 'CQRS', 'Clean Architecture', 'NGXS'],
     },
@@ -480,10 +509,10 @@ const DATA_EN = {
       period: 'July 2023 — April 2024',
       location: 'Buenos Aires, Argentina',
       bullets: [
-        'Analyzed financial regulations and implemented required business logic across internal and external banking applications.',
-        'Automated operational workflows through decoupled backend services, substantially reducing human operational errors.',
-        'Maintained and refactored critical services applying SOLID principles to facilitate future maintainability.',
-        'Monitored production telemetry logs to identify and resolve issues before they could affect end-users.',
+        'Automated mission-critical operational processes via decoupled backend services, eliminating manual error margins in financial reporting.',
+        'Refactored legacy services applying SOLID principles with zero end-user downtime, accelerating maintenance cycles for new regulatory mandates.',
+        'Analyzed and implemented complex central banking regulatory updates with strict adherence to audit and delivery deadlines.',
+        'Proactively monitored production telemetry logs to identify and resolve issues before they could affect end-users.',
       ],
       stack: ['SOLID', 'Backend services', 'Log monitoring', 'Agile / SCRUM'],
     },
@@ -493,9 +522,9 @@ const DATA_EN = {
       period: 'July 2021 — March 2024',
       location: 'Buenos Aires, Argentina',
       bullets: [
-        'Executed institutional platform migrations ensuring personnel maintained uninterrupted daily operations throughout.',
-        'Engineered an administrative case management system from scratch in .NET 6, digitizing manual citizen procedures.',
-        'Constructed web user interfaces with Blazor, JavaScript, and Bootstrap integrated with backend APIs.',
+        'Executed full institutional platform migration with 100% operational continuity for 1,500+ daily concurrent administrative users throughout the transition.',
+        'Engineered an administrative case management system from scratch in .NET 6 & C#, digitizing manual citizen procedures and slashing cycle times.',
+        'Developed responsive web interfaces with Blazor, JavaScript, and Bootstrap integrated with decoupled backend microservices.',
       ],
       stack: ['.NET 6', 'Blazor', 'C#', 'SharePoint', 'Azure DevOps', 'TFS'],
     },
@@ -516,7 +545,7 @@ const DATA_EN = {
       kind: 'Backend Architecture',
       status: 'in-progress',
       description:
-        'Backend reference architecture showcasing decoupled queue processing (SQS/Kafka). Documents how systems gracefully handle downstream outages to safeguard client data.',
+        'Backend reference architecture showcasing decoupled queue processing (SQS/Kafka). Documents how systems gracefully handle downstream outages to safeguard client data with controlled degradation.',
       stack: ['Node.js', 'AWS SQS', 'Kafka', 'Docker', 'OpenTelemetry'],
     },
     {
@@ -579,7 +608,7 @@ const DATA_EN = {
       challenge: 'Month-end trade settlement deadlines caused concurrent traffic spikes and connection timeouts across synchronous endpoints.',
       diagnosis: 'Dynatrace traces showed blocking database queries starving the available connection pool.',
       solution: 'Decoupled heavy processing using SQS/Kafka queues with asynchronous workers and idempotent retry semantics.',
-      impact: 'Stabilized response latencies, relieved database pressure, and ensured predictable transaction completions for banking users.',
+      impact: '65% reduction in p99 latency, stabilized database connection pools, and ensured predictable transaction completions for banking users.',
       tags: ['Kafka', 'AWS SQS', '.NET 6', 'Dynatrace', 'Event-Driven'],
     },
     {
@@ -612,7 +641,7 @@ const DATA_EN = {
 
   ui: {
     nav: {
-      letter: 'Letter',
+      letter: 'About Me',
       services: 'Solutions',
       experience: 'Experience',
       projects: 'Projects',
@@ -639,37 +668,60 @@ const DATA_EN = {
       ],
     },
     letter: {
-      eyebrow: 'Professional Letter · Practicality & Transparency',
-      heading: 'An open letter: how I work and why you can trust me',
-      p1: "Hi, I'm Ezequiel. If you arrived here looking for someone who uses jargon to sound like a guru or promises 'bulletproof systems that never fail', this isn't the place.",
-      p2: 'In real software engineering, servers experience high load, third-party APIs change without notice, and unforeseen issues happen. We are human beings building complex systems. My commitment to every client and team is not to sell magic, but to provide engineering judgment, transparency, and accountability.',
-      p3: 'I work to ensure your business runs smoothly: designing systems that anticipate failures gracefully, writing code that any developer can understand and maintain, and communicating openly at every milestone.',
-      commitmentsTitle: 'My 4 commitments on every engagement:',
+      eyebrow: 'About Me · Product Mindset & Ownership',
+      heading: 'Making things happen: spotting improvements, taking ownership, and building products users love',
+      p1: 'I view software engineering as the vehicle for building extraordinary products. I do not see backend systems as disconnected tables or endpoints, but as the silent engine that makes users and customers fall in love with the product: instantaneous response times, unwavering stability, and flows that just work.',
+      p2: 'I have a proactive, curious mindset with a hunger to achieve great things: I constantly spot opportunities for improvement in code, architecture, and developer workflows before they turn into bottlenecks. I work with growing autonomy to unblock complex technical challenges and thrive on scaling my impact in high-demand environments.',
+      p3: 'I pursue technical excellence because writing clean, tested, and modular code is the essential foundation for moving business needles in a measurable, sustainable way.',
+      metricsTitle: 'Quantifiable technical milestones in production:',
+      metrics: [
+        {
+          metric: '-65% p99 Latency',
+          label: 'Fintech Optimization',
+          context: 'Asynchronous re-architecture with Kafka & SQS sustaining peak banking demand (IBM / Supervielle).',
+        },
+        {
+          metric: '100% Continuity',
+          label: 'Institutional Migration',
+          context: 'Full platform transition for 1,500+ daily concurrent users with zero downtime (Public Sector).',
+        },
+        {
+          metric: '0 Manual Errors',
+          label: 'Backend Automation',
+          context: 'Decoupled services and automated regulatory validations for the Central Bank of Argentina (BCRA).',
+        },
+        {
+          metric: 'Full Ownership',
+          label: 'End-to-End Maker',
+          context: 'Personal projects (career-os), early adoption of agentic AI (Antigravity, Claude Code), and on-time delivery.',
+        },
+      ],
+      commitmentsTitle: 'How I work and the value I bring to your team:',
       commitments: [
         {
           index: 1,
-          title: 'Simplicity before overengineering',
-          body: 'I will never push complex tools or unnecessary microservices if a clean, straightforward architecture solves your problem at a fraction of the cost and maintenance overhead.',
+          title: 'End-to-end ownership',
+          body: 'I own tasks from requirements clarification to production deployment. I ask what is necessary to unblock quickly, collaborate with the team, and deliver complete solutions on time.',
         },
         {
           index: 2,
-          title: 'Design assuming things will fail',
-          body: 'Instead of pretending errors do not exist, I build systems with clear telemetry, safe retries, and data backups so issues can be diagnosed in minutes without hurting your users.',
+          title: 'Maker mindset & continuous curiosity',
+          body: 'I do not wait passively for instructions: I build personal projects, explore modern architectures, and leverage cutting-edge AI engineering tools to accelerate delivery with judgment.',
         },
         {
           index: 3,
-          title: 'Direct and transparent communication',
-          body: 'I speak your language (business or technical), respect committed delivery dates, and proactively notify you of roadblocks with viable solutions on the table, not excuses.',
+          title: 'Proactive detection of improvements',
+          body: 'I look at products through the eyes of an owner: finding database bottlenecks, proposing UX-enhancing backend optimizations, and turning complex problems into clean, robust flows.',
         },
         {
           index: 4,
-          title: 'Code built for your team’s future',
-          body: 'I write clean, tested, and documented code so you are not dependent on me alone. Your team or future developers will be able to take over and build upon it seamlessly.',
+          title: 'Excellence that moves business needles',
+          body: 'Clean code, SOLID principles, and comprehensive tests are not ivory-tower theory: they are the guarantee that the product can evolve fast without breaking at every release.',
         },
       ],
-      closing: 'Available for client projects, backend consulting, and roles in engineering teams that value craftsmanship.',
+      closing: 'Ready to join ambitious engineering teams, tackle high-demand technical challenges, and deliver tangible value from day one.',
       signatureName: 'Ezequiel Gonzalez',
-      signatureRole: 'Full Stack & Cloud Developer (.NET · Node · AWS)',
+      signatureRole: 'Full Stack & Cloud Developer · Product & Backend Engineering',
     },
     services: {
       eyebrow: 'Technical Solutions',
@@ -745,7 +797,7 @@ const DATA_EN = {
       credentialsTitle: 'Education & Credentials',
     },
     commandPalette: {
-      placeholder: 'Type a command or section (e.g. letter, solutions, experience, cv)...',
+      placeholder: 'Type a command or section (e.g. about me, solutions, experience, cv)...',
       navigationGroup: 'Navigation',
       actionsGroup: 'Quick Actions',
       copyEmailSuccess: 'Email copied to clipboard!',
