@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
@@ -12,14 +11,9 @@ export default defineConfig({
   base: '/portfolio',
   output: 'static',
   integrations: [
-    react(),
     tailwind({ applyBaseStyles: false }),
     sitemap(),
   ],
-  image: {
-    // sharp para optimizar imágenes a WebP/AVIF automáticamente
-    service: { entrypoint: 'astro/assets/services/sharp' },
-  },
   compressHTML: true,
   build: {
     // Un solo inline CSS pequeño + chunks JS mínimos
@@ -28,14 +22,6 @@ export default defineConfig({
   vite: {
     build: {
       cssMinify: true,
-      rollupOptions: {
-        output: {
-          // Chunks separados solo para React (theme toggle = único componente interactivo)
-          manualChunks: {
-            react: ['react', 'react-dom'],
-          },
-        },
-      },
     },
   },
 });

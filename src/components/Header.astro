@@ -1,13 +1,17 @@
 ---
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from './ThemeToggle.astro';
 import { SOCIAL } from '../data/portfolio.data';
 
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pathname = Astro.url.pathname.replace(/\/$/, '');
+const isHome = pathname === '' || pathname === baseUrl;
+
 const navLinks = [
-  { label: 'Experiencia', href: '#experience' },
-  { label: 'Proyectos',   href: '#projects' },
-  { label: 'Stack',       href: '#stack' },
-  { label: 'Arquitectura',href: '#architecture' },
-  { label: 'Contacto',   href: '#contact' },
+  { label: 'Experiencia', href: isHome ? '#experience' : `${baseUrl}/#experience` },
+  { label: 'Proyectos',   href: isHome ? '#projects' : `${baseUrl}/#projects` },
+  { label: 'Stack',       href: isHome ? '#stack' : `${baseUrl}/#stack` },
+  { label: 'Arquitectura',href: isHome ? '#architecture' : `${baseUrl}/#architecture` },
+  { label: 'Contacto',   href: isHome ? '#contact' : `${baseUrl}/#contact` },
 ];
 ---
 
@@ -20,7 +24,7 @@ const navLinks = [
 
       <!-- Brand -->
       <a
-        href="/portfolio"
+        href={baseUrl || '/'}
         class="flex items-center gap-2.5 shrink-0 group"
         aria-label="Inicio — Ezequiel Gonzalez"
       >
@@ -59,7 +63,7 @@ const navLinks = [
             aria-label="GitHub de Ezequiel Gonzalez"
           >
             GitHub
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               <polyline points="15 3 21 3 21 9"/>
               <line x1="10" y1="14" x2="21" y2="3"/>
@@ -73,7 +77,7 @@ const navLinks = [
             aria-label="LinkedIn de Ezequiel Gonzalez"
           >
             LinkedIn
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
               <polyline points="15 3 21 3 21 9"/>
               <line x1="10" y1="14" x2="21" y2="3"/>
@@ -83,8 +87,8 @@ const navLinks = [
 
         <div class="w-px h-4 bg-rim hidden lg:block" aria-hidden="true"></div>
 
-        <!-- Theme toggle (React island — solo JS necesario) -->
-        <ThemeToggle client:load />
+        <!-- Theme toggle (Astro nativo — 0 KB bundle) -->
+        <ThemeToggle />
 
         <!-- Mobile hamburger -->
         <button
@@ -120,10 +124,10 @@ const navLinks = [
         </a>
       ))}
       <div class="flex gap-6 pt-4">
-        <a href={SOCIAL.github} target="_blank" rel="noopener" class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
+        <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
           GitHub ↗
         </a>
-        <a href={SOCIAL.linkedin} target="_blank" rel="noopener" class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
+        <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
           LinkedIn ↗
         </a>
         <a href={`mailto:${SOCIAL.email}`} class="font-mono text-2xs text-ink-3 hover:text-gold transition-colors">
@@ -135,40 +139,64 @@ const navLinks = [
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn')!;
-  const menu = document.getElementById('mobile-menu')!;
-  const hamTop = document.getElementById('ham-top')!;
-  const hamMid = document.getElementById('ham-mid')!;
-  const hamBot = document.getElementById('ham-bot')!;
+  function setupMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const hamTop = document.getElementById('ham-top');
+    const hamMid = document.getElementById('ham-mid');
+    const hamBot = document.getElementById('ham-bot');
 
-  let open = false;
+    if (!btn || !menu || !hamTop || !hamMid || !hamBot) return;
 
-  btn.addEventListener('click', () => {
-    open = !open;
-    menu.classList.toggle('hidden', !open);
-    btn.setAttribute('aria-expanded', String(open));
+    let open = false;
 
-    // Animación hamburger → X
-    if (open) {
-      hamTop.style.transform = 'rotate(45deg) translateY(6px)';
-      hamMid.style.opacity = '0';
-      hamBot.style.transform = 'rotate(-45deg) translateY(-6px)';
-    } else {
-      hamTop.style.transform = '';
-      hamMid.style.opacity = '';
-      hamBot.style.transform = '';
-    }
-  });
-
-  // Cerrar al hacer click en un link del menú móvil
-  menu.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
+    const closeMenu = () => {
       open = false;
       menu.classList.add('hidden');
       btn.setAttribute('aria-expanded', 'false');
       hamTop.style.transform = '';
       hamMid.style.opacity = '';
       hamBot.style.transform = '';
+    };
+
+    const toggleMenu = () => {
+      open = !open;
+      menu.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+
+      // Animación hamburger → X
+      if (open) {
+        hamTop.style.transform = 'rotate(45deg) translateY(6px)';
+        hamMid.style.opacity = '0';
+        hamBot.style.transform = 'rotate(-45deg) translateY(-6px)';
+      } else {
+        closeMenu();
+      }
+    };
+
+    btn.addEventListener('click', toggleMenu);
+
+    // Cerrar al hacer click en un link del menú móvil
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
     });
-  });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open) {
+        closeMenu();
+        btn.focus();
+      }
+    });
+
+    // Cerrar si redimensiona a desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && open) {
+        closeMenu();
+      }
+    });
+  }
+
+  setupMobileMenu();
+  document.addEventListener('astro:after-swap', setupMobileMenu);
 </script>

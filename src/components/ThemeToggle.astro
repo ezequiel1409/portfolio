@@ -1,0 +1,91 @@
+---
+// ThemeToggle.astro — 0 KB JS bundle, nativo en Astro
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="w-[34px] h-[34px] flex items-center justify-center border border-rim rounded-sm text-ink-3 hover:border-gold hover:text-gold transition-colors duration-150"
+  aria-label="Cambiar tema"
+  title="Cambiar tema"
+>
+  <!-- Sol (visible en modo oscuro) -->
+  <svg
+    class="theme-toggle-sun w-3.5 h-3.5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+  >
+    <circle cx="12" cy="12" r="4" />
+    <line x1="12" y1="2" x2="12" y2="4" />
+    <line x1="12" y1="20" x2="12" y2="22" />
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+    <line x1="2" y1="12" x2="4" y2="12" />
+    <line x1="20" y1="12" x2="22" y2="12" />
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+  </svg>
+  <!-- Luna (visible en modo claro) -->
+  <svg
+    class="theme-toggle-moon w-3.5 h-3.5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+</button>
+
+<style>
+  /* Por defecto (dark), mostramos el sol para pasar a claro */
+  :global([data-theme='dark']) .theme-toggle-moon,
+  :global(:root:not([data-theme])) .theme-toggle-moon {
+    display: none;
+  }
+  :global([data-theme='dark']) .theme-toggle-sun,
+  :global(:root:not([data-theme])) .theme-toggle-sun {
+    display: block;
+  }
+
+  /* En modo claro, mostramos la luna para pasar a oscuro */
+  :global([data-theme='light']) .theme-toggle-sun {
+    display: none;
+  }
+  :global([data-theme='light']) .theme-toggle-moon {
+    display: block;
+  }
+</style>
+
+<script>
+  function setupThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    const updateLabel = (theme: string) => {
+      const isDark = theme === 'dark';
+      btn.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+      btn.setAttribute('title', isDark ? 'Modo claro' : 'Modo oscuro');
+    };
+
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateLabel(currentTheme);
+
+    btn.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const nextTheme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      updateLabel(nextTheme);
+      try {
+        localStorage.setItem('eg-theme', nextTheme);
+      } catch (_) {}
+    });
+  }
+
+  setupThemeToggle();
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

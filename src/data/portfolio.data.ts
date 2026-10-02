@@ -168,5 +168,5 @@ export const ARCH_PRINCIPLES: readonly ArchPrinciple[] = [
 export const CREDENTIALS: readonly Credential[] = [
   { label: 'Licenciatura en Informática', org: 'Universidad Nacional del Oeste', period: '2020 — presente' },
   { label: 'Desarrollo Front End', org: 'CoderHouse', period: '2022' },
-  { label: 'Red Hat Partner Program — Tier Premier', org: 'Red Hat', period: '' },
+  { label: 'Red Hat Partner Program — Tier Premier', org: 'Red Hat', period: 'Certificado / Activo' },
 ];

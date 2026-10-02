@@ -10,10 +10,13 @@ interface Props {
 const {
   title = 'Ezequiel Gonzalez — Full Stack Developer, Backend & Cloud',
   description = 'Construyo sistemas que se mantienen en pie cuando importa. 4+ años en microservicios event-driven, observabilidad end-to-end y arquitectura que escala en producción.',
-  ogImage = '/portfolio/og.png',
+  ogImage,
 } = Astro.props;
 
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImagePath = ogImage || `${baseUrl}/og.png`;
+const fullOgImageUrl = new URL(ogImagePath, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -33,23 +36,27 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={fullOgImageUrl} />
     <meta property="og:locale" content="es_AR" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={fullOgImageUrl} />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
-    <link rel="apple-touch-icon" href="/portfolio/apple-touch-icon.png" />
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+    <link rel="apple-touch-icon" href={`${baseUrl}/apple-touch-icon.png`} />
     <meta name="theme-color" content="#0a0c0f" />
 
-    <!-- Preconnect a Google Fonts antes de cargarlas -->
+    <!-- Preconnect & Google Fonts (evita render-blocking @import) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap"
+    />
 
     <!--
       ANTI-FLASH: este script inline corre ANTES de cualquier render.

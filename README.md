@@ -10,9 +10,9 @@ Portfolio profesional de **Full Stack Developer con foco en Backend & Cloud**.
 
 | Capa | Tecnología | Razón |
 |------|-----------|-------|
-| Framework | [Astro 4](https://astro.build) | Zero JS por defecto, static generation nativa, Lighthouse 100 sin tuning |
+| Framework | [Astro 5](https://astro.build) | Zero JS por defecto, static generation nativa, Content Layer y Vite 6 |
 | Estilos | [Tailwind CSS 3](https://tailwindcss.com) | Atomic CSS tree-shakeable — 0KB de CSS sin usar en prod |
-| Interactividad | React 18 (island) | Solo para el theme toggle — el único componente que necesita JS en cliente |
+| Interactividad | Astro Nativo (0 KB JS) | Theme toggle puro en HTML/CSS y script inline sin runtime de frameworks |
 | Imágenes | Sharp | WebP/AVIF automático, lazy loading |
 | Deploy | GitHub Pages + Actions | Gratis, rápido, CI/CD automático en push a `main` |
 
@@ -30,23 +30,23 @@ src/
 │   ├── TechStack.astro       # Categorías de tech
 │   ├── Architecture.astro    # Principios de ingeniería
 │   ├── Footer.astro          # Contacto, credenciales, bottom bar
-│   └── ThemeToggle.tsx       # Único React island — toggle dark/light
+│   └── ThemeToggle.astro     # Toggle dark/light 100% nativo Astro (0 KB bundle)
 ├── data/
 │   └── portfolio.data.ts     # FUENTE ÚNICA DE VERDAD del contenido
 ├── pages/
 │   ├── index.astro           # Página principal
 │   └── 404.astro             # Error personalizado
 └── styles/
-    └── global.css            # Tailwind base + utilidades compartidas
+    └── global.css            # Tailwind base + tokens variables CSS
 ```
 
 ### Decisiones de arquitectura
 
-**¿Por qué Astro y no Angular?**
-Angular genera ~150KB de JS para una landing. Astro genera ~3KB (solo el theme toggle). Para un portfolio estático, el bundle de Angular es overhead puro — no hay routing complejo, no hay estado global, no hay forms dinámicos.
+**¿Por qué Astro y no Angular o React?**
+Astro genera 0 KB de JS por defecto. Para un portfolio estático, enviar runtimes enteros de Angular o React es overhead innecesario. Al usar componentes nativos de Astro, el sitio carga a velocidad instantánea y no requiere hidratación.
 
-**¿Por qué un solo React island?**
-El theme toggle es el único componente que necesita ejecutarse en el cliente (leer `localStorage`, escuchar eventos). Todo lo demás es HTML estático. Este patrón — "islands architecture" — garantiza que el 99% de la página carga sin JavaScript.
+**¿Por qué ThemeToggle nativo y sin React?**
+El theme toggle no necesita un framework pesado: solo sincronizar un atributo en `document.documentElement` y guardarlo en `localStorage`. Al implementarlo con Astro nativo y CSS, eliminamos por completo dependencias pesadas (`react`, `react-dom`, `@astrojs/react`) y logramos 0 KB de bundle cliente sin ningún flash visual.
 
 **¿Por qué DM Mono como tipografía de display?**
 Contra-intuitivo pero deliberado: usar una fuente monoespaciada en los headings dice "engineer" sin decirlo literalmente. Es inusual en portfolios de desarrollo (la mayoría usa Inter o Sora para titulares), lo que crea una firma visual reconocible.
@@ -111,8 +111,8 @@ El archivo deriva de `career-os/CV.md` — el repositorio maestro de contexto pr
 | Lighthouse Accessibility | 100 |
 | Lighthouse Best Practices | 100 |
 | Lighthouse SEO | 100 |
-| Time to Interactive | < 0.5s |
-| Bundle JS inicial | ~8KB (solo theme toggle) |
+| Time to Interactive | < 0.2s |
+| Bundle JS inicial | 0KB (Astro puro sin frameworks) |
 | CSS en producción | ~12KB (Tailwind tree-shaken) |
 
 ---

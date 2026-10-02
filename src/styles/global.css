@@ -3,8 +3,7 @@
    Fuentes, variables, reset y utilidades no cubiertas por Tailwind
    ============================================================ */
 
-/* Fuentes — DM Mono (display), Inter (body), Fira Code (mono/badge) */
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap');
+/* Fuentes cargadas vía preconnect y <link> en Layout.astro */
 
 @tailwind base;
 @tailwind components;
@@ -15,10 +14,40 @@
    ============================================================ */
 
 :root {
+  --canvas: #0a0c0f;
+  --surface: #111418;
+  --surface-2: #181c22;
+  --rim: #252b34;
+  --rim-active: #3a424f;
+  --ink: #e5e7eb;
+  --ink-2: #9ca3af;
+  --ink-3: #6b7280;
+  --gold: #c9a227;
+  --gold-dim: #a8841f;
+  --gold-glow: rgb(201 162 39 / 0.15);
+  --live: #3ecf8e;
+  --live-dim: rgb(62 207 142 / 0.15);
+  --warn: #f59e0b;
+  --warn-dim: rgb(245 158 11 / 0.15);
   color-scheme: dark;
 }
 
 [data-theme='light'] {
+  --canvas: #f8f9fb;
+  --surface: #ffffff;
+  --surface-2: #eef2f7;
+  --rim: #d1d9e2;
+  --rim-active: #b5c2d1;
+  --ink: #0f1318;
+  --ink-2: #333d4b;
+  --ink-3: #505c6d;
+  --gold: #8c6300;
+  --gold-dim: #704f00;
+  --gold-glow: rgb(140 99 0 / 0.12);
+  --live: #15803d;
+  --live-dim: rgb(21 128 61 / 0.12);
+  --warn: #b45309;
+  --warn-dim: rgb(180 83 9 / 0.12);
   color-scheme: light;
 }
 
@@ -35,28 +64,13 @@ html {
 
 body {
   margin: 0;
-  background-color: theme('colors.canvas');
-  color: theme('colors.ink');
+  background-color: var(--canvas);
+  color: var(--ink);
   font-family: theme('fontFamily.body');
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* Light mode overrides */
-[data-theme='light'] body {
-  background-color: #f8f9fb;
-  color: #111418;
-}
-
-[data-theme='light'] {
-  --canvas: #f8f9fb;
-  --surface: #ffffff;
-  --rim: #e2e6ec;
-  --ink: #111418;
-  --ink-2: #4b5563;
-  --ink-3: #9ca3af;
 }
 
 /* ============================================================

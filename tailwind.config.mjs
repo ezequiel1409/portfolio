@@ -5,26 +5,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Paleta principal — dark-first, calibrada para WCAG AA
-        canvas: '#0a0c0f',        // fondo principal
-        surface: '#111418',       // cards, header
-        'surface-2': '#181c22',   // hover states
-        rim: '#252b34',           // bordes
-        'rim-active': '#3a424f',  // bordes en foco
+        // Paleta principal — tokens vinculados a variables CSS para que cambien con el tema.
+        canvas: 'var(--canvas)',
+        surface: 'var(--surface)',
+        'surface-2': 'var(--surface-2)',
+        rim: 'var(--rim)',
+        'rim-active': 'var(--rim-active)',
 
-        ink: '#e5e7eb',           // texto principal
-        'ink-2': '#9ca3af',       // texto secundario
-        'ink-3': '#6b7280',       // texto terciario / placeholders
+        ink: 'var(--ink)',
+        'ink-2': 'var(--ink-2)',
+        'ink-3': 'var(--ink-3)',
 
-        gold: '#c9a227',          // acento — precisión, calidad
-        'gold-dim': '#a8841f',    // gold en hover / pressed
-        'gold-glow': 'rgb(201 162 39 / 0.15)', // glow muy sutil
+        gold: 'var(--gold)',
+        'gold-dim': 'var(--gold-dim)',
+        'gold-glow': 'var(--gold-glow)',
 
-        live: '#3ecf8e',          // estado "operational / live"
-        'live-dim': 'rgb(62 207 142 / 0.15)',  // badge background
+        live: 'var(--live)',
+        'live-dim': 'var(--live-dim)',
 
-        warn: '#f59e0b',          // "in-progress"
-        'warn-dim': 'rgb(245 158 11 / 0.15)',
+        warn: 'var(--warn)',
+        'warn-dim': 'var(--warn-dim)',
       },
       fontFamily: {
         // DM Mono como display: inusual y representativo del dominio (engineer, no designer)
